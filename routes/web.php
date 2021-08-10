@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,8 @@ Route::get('/contact', function(){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Category ROute
+
+Route::get('/addcategory', [CategoryController::class, 'index']);
+Route::post('/category/insert', [CategoryController::class, 'insert']);
