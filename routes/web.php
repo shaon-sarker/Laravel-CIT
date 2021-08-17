@@ -36,3 +36,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/addcategory', [CategoryController::class, 'index']);
 Route::post('/category/insert', [CategoryController::class, 'insert']);
+Route::get('/category/delete/{category_id}', [CategoryController::class, 'delete']);
+
