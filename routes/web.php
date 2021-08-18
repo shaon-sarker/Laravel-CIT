@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\SubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +37,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/addcategory', [CategoryController::class, 'index']);
 Route::post('/category/insert', [CategoryController::class, 'insert']);
 Route::get('/category/delete/{category_id}', [CategoryController::class, 'delete']);
+
+//SUbcategory Route
+
+Route::get('/subcategory', [SubcategoryController::class, 'index']);
+Route::post('/subcategory/insert', [SubcategoryController::class, 'insert']);
 

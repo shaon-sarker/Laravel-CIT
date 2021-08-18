@@ -8,7 +8,6 @@
             <div class="alert alert-success">
                 {{ session('delsuccess') }}
             </div>
-
             @endif
             <table class="table">
                 <th>Sl</th>

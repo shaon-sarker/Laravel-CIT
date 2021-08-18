@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CategoryPost;
 
 class CategoryController extends Controller
 {
     function index(){
-        $categories = Category::all();
+        $categories = Category::latest()->get();
         return view('admin.category.index', compact('categories'));
     }
-    function insert(Request $request){
-        //Validation Category
-        $request->validate([
-            'category_name'=>'required',
-        ]);
+    function insert(CategoryPost $request){
+        // //Validation Category
+        // $request->validate([
+        //     'category_name'=>'required',
+        // ]);
 
         //Insert Category
         Category::insert([

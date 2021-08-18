@@ -32,13 +32,17 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav m-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/home') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/addcategory') }}">Category</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/subcategory') }}">Sub Category</a>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
