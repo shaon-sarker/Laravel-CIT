@@ -1,6 +1,14 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboad')
+@include('layouts.nav')
 @section('content')
+<div class="sl-mainpanel">
+    <nav class="breadcrumb sl-breadcrumb">
+      <a class="breadcrumb-item" href="index.html">Starlight</a>
+      <a class="breadcrumb-item" href="index.html">Pages</a>
+      <span class="breadcrumb-item active">Blank Page</span>
+    </nav>
+
+    <div class="sl-pagebody">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -32,7 +40,7 @@
 
         </div>
         <div class="col-md-4">
-            <div class="card-header">
+            <div class="card-header text-white bg-dark">
                 <h4>Add Category</h4>
             </div>
             <div class="card-body">
@@ -56,6 +64,8 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
     </div>
 </div>
 @endsection

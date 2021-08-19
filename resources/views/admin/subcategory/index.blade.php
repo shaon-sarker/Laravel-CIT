@@ -1,5 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.dashboad')
+@extends('layouts.nav')
 @section('content')
+<div class="sl-mainpanel">
+    <nav class="breadcrumb sl-breadcrumb">
+      <a class="breadcrumb-item" href="index.html">Starlight</a>
+      <a class="breadcrumb-item" href="index.html">Pages</a>
+      <span class="breadcrumb-item active">Blank Page</span>
+    </nav>
+
+    <div class="sl-pagebody">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -23,7 +32,7 @@
             </table>
         </div>
         <div class="col-lg-4">
-            <div class="card-header">
+            <div class="card-header text-white bg-dark">
                 <h4>Sub Category</h4>
             </div>
             <div class="card-body">
@@ -56,11 +65,18 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                        @if (session('subcategory_extis'))
+                        <div class="alert alert-danger">
+                            {{ session('subcategory_extis') }}
+                        </div>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
+    </div>
+</div>
     </div>
 </div>
 @endsection

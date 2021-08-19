@@ -1,7 +1,45 @@
-@extends('layouts.app')
+@extends('layouts.dashboad')
 
 @section('content')
-<div class="container">
+<div class="d-flex align-items-center justify-content-center bg-sl-primary ht-100v">
+
+    <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white">
+      <div class="signin-logo tx-center tx-24 tx-bold tx-inverse">Admin</div>
+
+      <form action="{{ route('login') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" value="{{ old('email') }}">
+            @error('email')
+            <div class="alert alert-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </div>
+             @enderror
+        </div>
+
+        <!-- form-group -->
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Enter your password" name="password">
+            @error('password')
+            <div class="alert alert-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </div>
+        @enderror
+            <a href="{{ route('password.request') }}" class="tx-info tx-12 d-block mg-t-10">Forgot password?</a>
+        </div>
+        <!-- form-group -->
+          <button type="submit" class="btn btn-info btn-block">Log In</button>
+      </form>
+
+      <div class="mg-t-60 tx-center">Not yet a member? <a href="{{ url('register') }}" class="tx-info">Sign Up</a></div>
+    </div><!-- login-wrapper -->
+  </div><!-- d-flex -->
+
+
+
+
+
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card bg-dark">
@@ -69,5 +107,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

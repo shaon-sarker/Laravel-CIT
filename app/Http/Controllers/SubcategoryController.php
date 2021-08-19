@@ -17,12 +17,23 @@ class SubcategoryController extends Controller
         return view('admin.subcategory.index', compact('categories','subcategorys'));
     }
     function insert(SubcategoryPost $request){
-         //Insert SubCategory
+
+        if(Subcategory::where('category_id', $request->category_id)->where('subcategory_name', $request->subcategory_name)->exists())
+        {
+           return back()->with('subcategory_extis', 'Subcategory already exits');
+        }
+        else
+        {
+             //Insert SubCategory
          Subcategory::insert([
             'category_id'=>$request->category_id,
             'subcategory_name'=>$request->subcategory_name,
             'created_at'=>Carbon::now()
         ]);
         return back()->with('success', 'SubCategory Added Succesfully');
+        }
+
+
+
     }
 }

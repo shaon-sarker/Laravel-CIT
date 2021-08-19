@@ -1,7 +1,50 @@
-@extends('layouts.app')
+@extends('layouts.dashboad')
 
 @section('content')
-<div class="container">
+
+<div class="d-flex align-items-center justify-content-center bg-sl-primary ht-md-100v">
+
+    <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white">
+      <div class="signin-logo tx-center tx-24 tx-bold tx-inverse">starlight <span class="tx-info tx-normal">admin</span></div>
+      <div class="tx-center mg-b-60">Professional Admin Template Design</div>
+
+    <form action="{{ route('register') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <input type="text" name="name"  value="{{ old('name') }}" class="form-control" placeholder="Enter your username">
+            @error('name')
+            <div class="alert alert-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </div>
+            @enderror
+        </div><!-- form-group -->
+        <div class="form-group">
+            <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Enter your email">
+            @error('email')
+            <div class="alert alert-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </div>
+            @enderror
+        </div><!-- form-group -->
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Enter your password">
+            @error('password')
+            <div class="alert alert-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </div>
+            @enderror
+        </div><!-- form-group -->
+        <div class="form-group">
+            <input type="password" name="password_confirmation" class="form-control" placeholder="Enter your Confirm password">
+        </div><!-- form-group -->
+        <button type="submit" class="btn btn-info btn-block">Register</button>
+    </form>
+
+
+      <div class="mg-t-40 tx-center">Already have an account? <a href="{{ url('login') }}" class="tx-info">Sign In</a></div>
+    </div><!-- login-wrapper -->
+  </div><!-- d-flex -->
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card bg-dark">
@@ -73,5 +116,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
