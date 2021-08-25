@@ -14,7 +14,8 @@ class SubcategoryController extends Controller
     function index(){
         $categories = Category::all();
         $subcategorys = Subcategory::latest()->get();
-        return view('admin.subcategory.index', compact('categories','subcategorys'));
+        $deleted_subcategories = Subcategory::onlyTrashed()->get();
+        return view('admin.subcategory.index', compact('categories','subcategorys','deleted_subcategories'));
     }
     function insert(SubcategoryPost $request){
 
@@ -32,8 +33,14 @@ class SubcategoryController extends Controller
         ]);
         return back()->with('success', 'SubCategory Added Succesfully');
         }
+    }
 
-
-
+    function delete($subcategory_id){
+        Subcategory::find($subcategory_id)->delete();
+        return back();
+    }
+    function restore($deletesubcategory_id){
+        Subcategory::withTrashed()->find($deletesubcategory_id)->restore();
+        return back();
     }
 }

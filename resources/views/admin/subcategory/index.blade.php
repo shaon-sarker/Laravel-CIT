@@ -19,15 +19,45 @@
                 <th>Created at</th>
                 <th>Action</th>
                 <tbody>
-                    @foreach ($subcategorys as $subcategory)
+                    @forelse ($subcategorys as $subcategory )
                     <tr>
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ App\Models\Category::find($subcategory->category_id)->category_name }}</td>
                         <td>{{ $subcategory->subcategory_name }}</td>
                         <td>{{ $subcategory->created_at->format('d/m/y h:i:s') }}</td>
-                        <td><a href="" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{{ url('/subcategory/delete/') }}/{{ $subcategory->id }}" class="btn btn-danger">Delete</a></td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr><td>No data found</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <h2>Trash list</h2>
+            <table class="table">
+                <th>Sl</th>
+                <th>Categpry Name</th>
+                <th>SubCategpry Name</th>
+                <th>Created at</th>
+                <th>Action</th>
+                <tbody>
+                    @forelse ($deleted_subcategories as $deletedtrash_subcategories)
+                    <tr>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td>{{ App\Models\Category::find($deletedtrash_subcategories->category_id)->category_name }}</td>
+                        <td>{{ $deletedtrash_subcategories->subcategory_name }}</td>
+                        <td>
+                            @if ($deletedtrash_subcategories->created_at->diffForHumans() >= '3 days ago')
+                            {{ $deletedtrash_subcategories->created_at->diffForHumans() }}
+                            @else
+                                {{ $deletedtrash_subcategories->created_at }}
+                            @endif
+                        </td>
+                        <td><a href="{{ url('/subcategory/restore/') }}/{{ $deletedtrash_subcategories->id }}" class="btn btn-success">Restore</a></td>
+                    </tr>
+                    @empty
+
+                    @endforelse
                 </tbody>
             </table>
         </div>
