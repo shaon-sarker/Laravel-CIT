@@ -1,6 +1,9 @@
 @extends('layouts.dashboad')
-@include('layouts.nav')
+@section('dashboard')
+active
+@endsection
 @section('content')
+@include('layouts.nav')
 <!-- ########## START: MAIN PANEL ########## -->
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
@@ -16,7 +19,6 @@
                     <div class="card">
                         <div class="card-header bg-dark text-white text-center">
                             <h2> Welcome {{ $logged_user_name }}</h2>
-
                         </div>
 
                         <div class="card-body">

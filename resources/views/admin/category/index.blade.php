@@ -1,6 +1,9 @@
 @extends('layouts.dashboad')
-@include('layouts.nav')
+@section('category')
+active
+@endsection
 @section('content')
+@include('layouts.nav')
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
       <a class="breadcrumb-item" href="index.html">Starlight</a>
@@ -12,6 +15,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            <h2 class="bg-dark text-white p-2 mt-3 text-center">Category list</h2>
             @if (session('delsuccess'))
             <div class="alert alert-success">
                 {{ session('delsuccess') }}
@@ -39,7 +43,7 @@
         </table>
 
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mt-3">
             <div class="card-header text-white bg-dark">
                 <h4>Add Category</h4>
             </div>

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\EditprofileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,18 +34,23 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Category ROute
-
+//Category Route
 Route::get('/addcategory', [CategoryController::class, 'index']);
 Route::post('/category/insert', [CategoryController::class, 'insert']);
 Route::get('/category/delete/{category_id}', [CategoryController::class, 'delete']);
 
 //SUbcategory Route
-
 Route::get('/subcategory', [SubcategoryController::class, 'index']);
 Route::post('/subcategory/insert', [SubcategoryController::class, 'insert']);
 Route::get('/subcategory/delete/{subcategory_id}', [SubcategoryController::class, 'delete']);
 Route::get('/subcategory/restore/{deletesubcategory_id}', [SubcategoryController::class, 'restore']);
+Route::get('/subcategory/perdelete/{subcategory_id}', [SubcategoryController::class, 'perdelete']);
+Route::post('/subcategory/markdelete', [SubcategoryController::class, 'markdelete']);
+
+//Profile Edit page
+Route::get('/editprofile', [EditprofileController::class, 'index']);
+
+
 
 
 

@@ -1,5 +1,5 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> starlight</a></div>
+<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i>{{ env('APP_NAME') }}</a></div>
 <div class="sl-sideleft">
   <div class="input-group input-group-search">
     <input type="search" name="search" class="form-control" placeholder="Search">
@@ -10,19 +10,19 @@
 
   <label class="sidebar-label">Navigation</label>
   <div class="sl-sideleft-menu">
-    <a href="{{ url('/home') }}" class="sl-menu-link">
+    <a href="{{ url('/home') }}" class="sl-menu-link @yield('dashboard')">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
         <span class="menu-item-label">Dashboard</span>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link -->
-    <a href="{{ url('/addcategory') }}" class="sl-menu-link">
+    <a href="{{ url('/addcategory') }}" class="sl-menu-link @yield('category')">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
         <span class="menu-item-label">Category</span>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link -->
-    <a href="{{ url('/subcategory') }}" class="sl-menu-link">
+    <a href="{{ url('/subcategory') }}" class="sl-menu-link @yield('subcategory')">
         <div class="sl-menu-item">
           <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
           <span class="menu-item-label">SubCategory</span>
@@ -58,12 +58,12 @@
     <nav class="nav">
       <div class="dropdown">
         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-          <span class="logged-name">Jane<span class="hidden-md-down"> Doe</span></span>
-          <img src="{{ asset('starlight_dashboad/img/img3.jpg') }}" class="wd-32 rounded-circle" alt="">
+          <span class="logged-name">{{ Auth::user()->name }}</span>
+          <img src="{{ asset('starlight_dashboad/img/s.png') }}" class="wd-32 rounded-circle" alt="">
         </a>
         <div class="dropdown-menu dropdown-menu-header wd-200">
           <ul class="list-unstyled user-profile-nav">
-            <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
+            <li><a href="{{ url('/editprofile') }}"><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
             <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
             <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
             <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>

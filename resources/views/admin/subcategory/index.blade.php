@@ -1,18 +1,24 @@
 @extends('layouts.dashboad')
-@extends('layouts.nav')
+@section('subcategory')
+active
+@endsection
 @section('content')
+@include('layouts.nav')
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
-      <a class="breadcrumb-item" href="index.html">Starlight</a>
+      <a class="breadcrumb-item" href="index.html">{{ @yield('dashboard') }}</a>
       <a class="breadcrumb-item" href="index.html">Pages</a>
-      <span class="breadcrumb-item active">Blank Page</span>
     </nav>
 
     <div class="sl-pagebody">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            <h2 class="bg-dark text-white p-2 mt-3 text-center">Subcategory list</h2>
+            <form action="{{ url('subcategory/markdelete') }}" method="POST">
+                @csrf
             <table class="table">
+                <th>Mark</th>
                 <th>Sl</th>
                 <th>Categpry Name</th>
                 <th>SubCategpry Name</th>
@@ -21,10 +27,17 @@
                 <tbody>
                     @forelse ($subcategorys as $subcategory )
                     <tr>
+                        <td><input type="checkbox" name="marked_id[]" value="{{$subcategory->id}}"></td>
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ App\Models\Category::find($subcategory->category_id)->category_name }}</td>
                         <td>{{ $subcategory->subcategory_name }}</td>
-                        <td>{{ $subcategory->created_at->format('d/m/y h:i:s') }}</td>
+                        <td>
+                            @if ($subcategory->created_at->diffInDays(\Carbon\Carbon::today()) > 3)
+                            {{ $subcategory->created_at->format('d/m/y h:i:s') }}
+                            @else
+                                {{ $subcategory->created_at->diffForHumans()}}
+                            @endif
+                        </td>
                         <td><a href="{{ url('/subcategory/delete/') }}/{{ $subcategory->id }}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @empty
@@ -32,8 +45,15 @@
                     @endforelse
                 </tbody>
             </table>
+            <button class="btn btn-info">Delete Mark</button>
+        </form>
 
-            <h2>Trash list</h2>
+            <h2 class="bg-dark text-white p-2 mt-3 text-center">Trash Subcategory list</h2>
+            @if (session('delsuccess'))
+            <div class="alert alert-success">
+                {{ session('delsuccess') }}
+            </div>
+            @endif
             <table class="table">
                 <th>Sl</th>
                 <th>Categpry Name</th>
@@ -47,21 +67,22 @@
                         <td>{{ App\Models\Category::find($deletedtrash_subcategories->category_id)->category_name }}</td>
                         <td>{{ $deletedtrash_subcategories->subcategory_name }}</td>
                         <td>
-                            @if ($deletedtrash_subcategories->created_at->diffForHumans() >= '3 days ago')
-                            {{ $deletedtrash_subcategories->created_at->diffForHumans() }}
+                            @if ($deletedtrash_subcategories->created_at->diffInDays(\Carbon\Carbon::today()) > 3)
+                            {{ $deletedtrash_subcategories->created_at->format('d/m/y h:i:s') }}
                             @else
-                                {{ $deletedtrash_subcategories->created_at }}
+                                {{ $deletedtrash_subcategories->created_at->diffForHumans()}}
                             @endif
                         </td>
                         <td><a href="{{ url('/subcategory/restore/') }}/{{ $deletedtrash_subcategories->id }}" class="btn btn-success">Restore</a></td>
+                        <td><a href="{{ url('/subcategory/perdelete/') }}/{{ $deletedtrash_subcategories->id }}" class="btn btn-danger">Permanent Delete</a></td>
                     </tr>
                     @empty
-
+                    <tr><td><h4>No data found</h4></td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 mt-3">
             <div class="card-header text-white bg-dark">
                 <h4>Sub Category</h4>
             </div>

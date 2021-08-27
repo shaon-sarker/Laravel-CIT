@@ -30,5 +30,7 @@ class HomeController extends Controller
         $total_user = User::count();
         $logged_user_name = Auth::user()->name;
         return view('home', compact('users', 'total_user', 'logged_user_name'));
+        return view('layouts.nav', compact('logged_user_name'));
+
     }
 }
