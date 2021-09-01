@@ -6,11 +6,10 @@ active
 @include('layouts.nav')
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
-      <a class="breadcrumb-item" href="index.html">{{ @yield('dashboard') }}</a>
+      <a class="breadcrumb-item" href="index.html">Dasboad</a>
       <a class="breadcrumb-item" href="index.html">Pages</a>
     </nav>
-
-    <div class="sl-pagebody">
+<div class="sl-pagebody">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -18,7 +17,7 @@ active
             <form action="{{ url('subcategory/markdelete') }}" method="POST">
                 @csrf
             <table class="table">
-                <th>Mark</th>
+                <th><input type="checkbox" onclick="checkAll(this)"> Mark</th>
                 <th>Sl</th>
                 <th>Categpry Name</th>
                 <th>SubCategpry Name</th>
@@ -33,7 +32,7 @@ active
                         <td>{{ $subcategory->subcategory_name }}</td>
                         <td>
                             @if ($subcategory->created_at->diffInDays(\Carbon\Carbon::today()) > 3)
-                            {{ $subcategory->created_at->format('d/m/y h:i:s') }}
+                                {{ $subcategory->created_at->format('d/m/y h:i:s') }}
                             @else
                                 {{ $subcategory->created_at->diffForHumans()}}
                             @endif
@@ -55,6 +54,7 @@ active
             </div>
             @endif
             <table class="table">
+                {{-- <th><input type="checkbox" onclick="checkAll(this)">Mark</th> --}}
                 <th>Sl</th>
                 <th>Categpry Name</th>
                 <th>SubCategpry Name</th>
@@ -63,6 +63,7 @@ active
                 <tbody>
                     @forelse ($deleted_subcategories as $deletedtrash_subcategories)
                     <tr>
+                        {{-- <td><input type="checkbox" name="restore_id[]" value="{{$subcategory->id}}"></td> --}}
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ App\Models\Category::find($deletedtrash_subcategories->category_id)->category_name }}</td>
                         <td>{{ $deletedtrash_subcategories->subcategory_name }}</td>
@@ -128,6 +129,18 @@ active
         </div>
     </div>
 </div>
-    </div>
 </div>
+</div>
+@endsection
+@section('footer_script')
+<script>
+    function checkAll(allCheckbox, id){
+        let query = id ? id+' input[type=checkbox]' : ' input[type=checkbox]';
+        let allCheckboxes = document.querySelectorAll(query);
+        for (let i = 0; i < allCheckboxes.length; i++){
+            let curCheckbox = allCheckboxes[i];
+            curCheckbox.checked = allCheckbox.checked;
+        }
+    }
+    </script>
 @endsection

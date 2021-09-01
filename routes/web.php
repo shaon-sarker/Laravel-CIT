@@ -46,9 +46,15 @@ Route::get('/subcategory/delete/{subcategory_id}', [SubcategoryController::class
 Route::get('/subcategory/restore/{deletesubcategory_id}', [SubcategoryController::class, 'restore']);
 Route::get('/subcategory/perdelete/{subcategory_id}', [SubcategoryController::class, 'perdelete']);
 Route::post('/subcategory/markdelete', [SubcategoryController::class, 'markdelete']);
+// Route::post('/subcategory/markrestore', [SubcategoryController::class, 'markrestore']);
+
 
 //Profile Edit page
 Route::get('/editprofile', [EditprofileController::class, 'index']);
+Route::post('/editprofile/namechange', [EditprofileController::class, 'profilechange']);
+Route::post('/editprofile/passchange', [EditprofileController::class, 'passwordchange']);
+
+
 
 
 

@@ -19,13 +19,13 @@ class SubcategoryController extends Controller
     }
     function insert(SubcategoryPost $request){
 
-        if(Subcategory::where('category_id', $request->category_id)->where('subcategory_name', $request->subcategory_name)->exists())
+        if(Subcategory::withTrashed()->where('category_id', $request->category_id)->where('subcategory_name', $request->subcategory_name)->exists())
         {
            return back()->with('subcategory_extis', 'Subcategory already exits');
         }
         else
         {
-             //Insert SubCategory
+        //Insert SubCategory
          Subcategory::insert([
             'category_id'=>$request->category_id,
             'subcategory_name'=>$request->subcategory_name,
