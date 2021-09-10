@@ -55,4 +55,20 @@ class SubcategoryController extends Controller
 
         return back();
     }
+    function edit($subcategory_id){
+        $categories = Category::all();
+        $subcategories = Subcategory::find($subcategory_id);
+        return view('admin.subcategory.edit', compact('subcategories','categories'));
+    }
+    // function update(Request $request){
+    //     print_r($request->all());
+    // }
+    function update(Request $request){
+      Subcategory::find($request->subcategory_id)->update([
+          'category_id'=>$request->category_id,
+          'subcategory_name'=>$request->subcategory_name,
+
+      ]);
+      return back()->with('update','update succesfully');
+    }
 }

@@ -59,7 +59,7 @@
       <div class="dropdown">
         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
           <span class="logged-name">{{ Auth::user()->name }}</span>
-          <img src="{{ asset('starlight_dashboad/img/s.png') }}" class="wd-32 rounded-circle" alt="">
+          <img src="{{ asset('uploads/users') }}/{{ Auth::user()->profile_pic }}" class="wd-32 rounded-circle" alt="">
         </a>
         <div class="dropdown-menu dropdown-menu-header wd-200">
           <ul class="list-unstyled user-profile-nav">

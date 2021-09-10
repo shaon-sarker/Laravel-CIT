@@ -37,6 +37,7 @@ active
                                 {{ $subcategory->created_at->diffForHumans()}}
                             @endif
                         </td>
+                        <td><a href="{{ url('/subcategory/edit') }}/{{ $subcategory->id }}" class="btn btn-info">Edit</a></td>
                         <td><a href="{{ url('/subcategory/delete/') }}/{{ $subcategory->id }}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @empty

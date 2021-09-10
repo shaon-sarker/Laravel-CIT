@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Image;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
@@ -47,5 +49,22 @@ class EditprofileController extends Controller
         else{
             return back('wrongpass', 'Old password is wrong');
         }
+    }
+    function userphotochange(Request $request){
+        $request->validate([
+            'profile_pic'=>'image',
+            'profile_pic'=>'file|max:512',
+
+        ]);
+
+        $new_profile_photo = $request->profile_pic;
+        $extension = $new_profile_photo->getClientOriginalExtension();
+        $new_profile_name = Auth::id().'.'.$extension;
+
+        Image::make($new_profile_photo)->save(base_path('public/uploads/users/'.$new_profile_name));
+        User::find(Auth::id())->update([
+            'profile_pic'=>$new_profile_name,
+        ]);
+        return back();
     }
 }

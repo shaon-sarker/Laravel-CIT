@@ -43,6 +43,8 @@ Route::get('/category/delete/{category_id}', [CategoryController::class, 'delete
 Route::get('/subcategory', [SubcategoryController::class, 'index']);
 Route::post('/subcategory/insert', [SubcategoryController::class, 'insert']);
 Route::get('/subcategory/delete/{subcategory_id}', [SubcategoryController::class, 'delete']);
+Route::get('/subcategory/edit/{subcategory_id}', [SubcategoryController::class, 'edit']);
+Route::post('/subcategory/update', [SubcategoryController::class, 'update']);
 Route::get('/subcategory/restore/{deletesubcategory_id}', [SubcategoryController::class, 'restore']);
 Route::get('/subcategory/perdelete/{subcategory_id}', [SubcategoryController::class, 'perdelete']);
 Route::post('/subcategory/markdelete', [SubcategoryController::class, 'markdelete']);
@@ -53,6 +55,8 @@ Route::post('/subcategory/markdelete', [SubcategoryController::class, 'markdelet
 Route::get('/editprofile', [EditprofileController::class, 'index']);
 Route::post('/editprofile/namechange', [EditprofileController::class, 'profilechange']);
 Route::post('/editprofile/passchange', [EditprofileController::class, 'passwordchange']);
+Route::post('/editprofile/userphotochange', [EditprofileController::class, 'userphotochange']);
+
 
 
 

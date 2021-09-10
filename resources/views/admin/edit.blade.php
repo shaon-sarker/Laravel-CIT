@@ -81,6 +81,41 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Update Profile</h4>
+                        </div>
+                        <div class="card-body">
+                            {{-- @if (session('passsuccess'))
+                                <div class="alert alert-success">
+                                    {{ session('passsuccess') }}
+                                </div>
+                            @endif --}}
+                            <form action="{{ url('/editprofile/userphotochange') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <p>profile pic</p>
+                                    <img class="w-25" src="{{ asset('uploads/users') }}/{{ Auth::user()->profile_pic}}" alt="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Profile</label>
+                                    <input name="profile_pic" type="file" class="form-control" oninput="pic.src=window.URL.createObjectURL(this.files[0])">
+                                    <img src="" id="pic" class="w-25 py-2" alt="">
+                                    @error('profile_pic')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
