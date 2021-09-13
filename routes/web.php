@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\EditprofileController;
-
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +56,18 @@ Route::get('/editprofile', [EditprofileController::class, 'index']);
 Route::post('/editprofile/namechange', [EditprofileController::class, 'profilechange']);
 Route::post('/editprofile/passchange', [EditprofileController::class, 'passwordchange']);
 Route::post('/editprofile/userphotochange', [EditprofileController::class, 'userphotochange']);
+
+
+//Product Route
+Route::get('/product', [ProductController::class, 'view']);
+Route::get('/product/add', [ProductController::class, 'index']);
+Route::post('/product/insert', [ProductController::class, 'insert']);
+Route::get('/product/view/{id}', [ProductController::class, 'signleview']);
+Route::get('/product/edit/{product_id}', [ProductController::class, 'edit']);
+Route::post('/product/update', [ProductController::class, 'update']);
+
+
+
 
 
 

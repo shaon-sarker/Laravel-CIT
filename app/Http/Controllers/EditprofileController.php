@@ -38,7 +38,7 @@ class EditprofileController extends Controller
             ->symbols(),
         ]);
 
-        die();
+        // die();
         if(Hash::check($request->old_password,Auth::user()->password)){
             $user_id = Auth::id();
             User::find($user_id)->update([
@@ -56,6 +56,10 @@ class EditprofileController extends Controller
             'profile_pic'=>'file|max:512',
 
         ]);
+        if(Auth::user()->profile_pic != 'default.jpg'){
+            $delete_path = public_path()."/uploads/users/".Auth::user()->profile_pic;
+            unlink($delete_path);
+        }
 
         $new_profile_photo = $request->profile_pic;
         $extension = $new_profile_photo->getClientOriginalExtension();

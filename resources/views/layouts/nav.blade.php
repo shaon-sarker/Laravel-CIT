@@ -28,6 +28,17 @@
           <span class="menu-item-label">SubCategory</span>
         </div><!-- menu-item -->
       </a><!-- sl-menu-link -->
+      <a href="" class="sl-menu-link @yield('product')">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+          <span class="menu-item-label">Products</span>
+        </div><!-- menu-item -->
+      </a><!-- sl-menu-link -->
+      <ul class="sl-menu-sub nav flex-column">
+        <li class="nav-item"><a href="{{ url('/product') }}" class="nav-link">View Page</a></li>
+        <li class="nav-item"><a href="{{ url('/product/add') }}" class="nav-link">Add Product Page</a></li>
+      </ul>
+
 
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
