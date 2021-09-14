@@ -78,4 +78,11 @@ class ProductController extends Controller
         return back()->with('update', 'Update Successfully');
 
     }
+    function delete($product_id){
+        Product::find($product_id)->delete();
+        // $image = Product::find($product_id);
+        // $old_image = $image->product_image;
+        // unlink($old_image);
+        return back()->with('delete', 'Product delete succesfully');
+    }
 }

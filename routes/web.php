@@ -65,6 +65,8 @@ Route::post('/product/insert', [ProductController::class, 'insert']);
 Route::get('/product/view/{id}', [ProductController::class, 'signleview']);
 Route::get('/product/edit/{product_id}', [ProductController::class, 'edit']);
 Route::post('/product/update', [ProductController::class, 'update']);
+Route::get('/product/delete/{product_id}', [ProductController::class, 'delete']);
+
 
 
 
