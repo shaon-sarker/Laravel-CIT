@@ -45,7 +45,8 @@ active
                                             <td>{{ $product->product_price }}</td>
                                             <td>{{ $product->product_description }}</td>
                                             <td>{{ $product->product_quantity }}</td>
-                                            <td><a href="{{ url('/product/view') }}/{{ $product->id }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
+                                            <td>
+                                                <a href="{{ url('/product/view') }}/{{ $product->id }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a></td>
                                             <td><a href="{{ url('/product/edit') }}/{{ $product->id }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a></td>
                                             <td><a href="{{ url('/product/delete') }}/{{ $product->id }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                                         </tr>

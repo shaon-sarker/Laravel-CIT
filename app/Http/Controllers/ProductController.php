@@ -64,7 +64,7 @@ class ProductController extends Controller
         ]);
         $request->validate([
             'product_image'=>'image',
-            'product_image'=>'file|max:512',
+            'product_image'=>'file|max:600',
 
         ]);
         $new_product_photo = $request->product_image;
@@ -79,10 +79,11 @@ class ProductController extends Controller
 
     }
     function delete($product_id){
+        $image = Product::find($product_id);
+        $old_image = $image->product_image;
+        $delete_path = public_path().'/uploads/products/'.$old_image;
+        unlink($delete_path);
         Product::find($product_id)->delete();
-        // $image = Product::find($product_id);
-        // $old_image = $image->product_image;
-        // unlink($old_image);
         return back()->with('delete', 'Product delete succesfully');
     }
 }
