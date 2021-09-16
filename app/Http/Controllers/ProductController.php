@@ -12,10 +12,15 @@ use Image;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     function view(){
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        $products = Product::all();
+        $products = Product::latest()->get();
         return view('admin.product.view', compact('categories','subcategories','products'));
     }
     function index(){
@@ -64,7 +69,7 @@ class ProductController extends Controller
         ]);
         $request->validate([
             'product_image'=>'image',
-            'product_image'=>'file|max:600',
+            'product_image'=>'file|size:600',
 
         ]);
         $new_product_photo = $request->product_image;
@@ -86,4 +91,23 @@ class ProductController extends Controller
         Product::find($product_id)->delete();
         return back()->with('delete', 'Product delete succesfully');
     }
+    // function multipleimage(){
+    //     $multi_pic = multipleimage::all();
+    //     return view('admin.product.multipleimage',compact('multi_pic'));
+    // }
+    // function multiinsert(Request $request){
+    //     $product_id = multipleimage::insertGetId([
+    //         'product_image'=>$request->product_image,
+    //     ]);
+
+    //     $new_product_photo = $request->product_image;
+    //     $extension = $new_product_photo->getClientOriginalExtension();
+    //     $new_profile_name = $product_id.'.'.$extension;
+
+    //     Image::make($new_product_photo)->save(base_path('public/uploads/mutipleproducts/'.$new_profile_name));
+    //     multipleimage::find($product_id)->update([
+    //         'product_image'=>$new_profile_name,
+    //     ]);
+    //     return back();
+    // }
 }

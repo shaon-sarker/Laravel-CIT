@@ -15,6 +15,11 @@ use Illuminate\Validation\Rules\Password;
 
 class EditprofileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     function index(){
         return view('admin.edit');
     }

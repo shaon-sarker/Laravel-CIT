@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\EditprofileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\fornntendController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +20,30 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/about', function(){
-    return view('about');
+// Route::get('/', function () {
+//     return view('forntend.master');
+// });
+// Route::get('/about', function(){
+//     return view('about');
 
-});
-Route::get('/contact', function(){
-    return view('contact');
+// });
+// Route::get('/contact', function(){
+//     return view('contact');
 
-});
+// });
+
+
+
+
+Route::get('/', [fornntendController::class, 'welcome']);
+Route::get('/product/details/{product_id}', [fornntendController::class, 'product_detail']);
+Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
+
+
+
+
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Category Route
@@ -50,7 +62,6 @@ Route::get('/subcategory/perdelete/{subcategory_id}', [SubcategoryController::cl
 Route::post('/subcategory/markdelete', [SubcategoryController::class, 'markdelete']);
 // Route::post('/subcategory/markrestore', [SubcategoryController::class, 'markrestore']);
 
-
 //Profile Edit page
 Route::get('/editprofile', [EditprofileController::class, 'index']);
 Route::post('/editprofile/namechange', [EditprofileController::class, 'profilechange']);
@@ -66,6 +77,11 @@ Route::get('/product/view/{id}', [ProductController::class, 'signleview']);
 Route::get('/product/edit/{product_id}', [ProductController::class, 'edit']);
 Route::post('/product/update', [ProductController::class, 'update']);
 Route::get('/product/delete/{product_id}', [ProductController::class, 'delete']);
+
+// ///Multiple
+// Route::get('/product/multiple', [ProductController::class, 'multipleimage']);
+// Route::post('/product/insert', [ProductController::class,'multiinsert']);
+
 
 
 

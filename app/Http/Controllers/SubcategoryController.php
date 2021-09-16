@@ -11,6 +11,11 @@ use App\Http\Requests\SubcategoryPost;
 
 class SubcategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     function index(){
         $categories = Category::all();
         $subcategorys = Subcategory::latest()->get();

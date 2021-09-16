@@ -7,9 +7,16 @@ use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryPost;
+use App\Models\Subcategory;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     function index(){
         $categories = Category::latest()->get();
         return view('admin.category.index', compact('categories'));
@@ -30,7 +37,19 @@ class CategoryController extends Controller
     }
 
     function delete($category_id){
-        Category::find($category_id)->delete();
+        // Category::find($category_id)->delete();
+        // Subcategory::where('category_id', $category_id)->forceDelete();
+        // Subcategory::where('category_id', $category_id)->update([
+        //     'category_id'=>1,
+        // ]);
+        if(Subcategory::where('category_id', '!=', $category_id)){
+            echo 'ok';
+        }
+        else{
+            echo 'nai';
+        }
+        die();
+
         return back()->with('delsuccess', 'Category Delete Successfully');
 
     }

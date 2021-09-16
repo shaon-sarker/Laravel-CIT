@@ -38,6 +38,12 @@
         <li class="nav-item"><a href="{{ url('/product') }}" class="nav-link">View Page</a></li>
         <li class="nav-item"><a href="{{ url('/product/add') }}" class="nav-link">Add Product Page</a></li>
       </ul>
+      <a href="{{ url('/product/multiple') }}" class="sl-menu-link @yield('multiple')">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+          <span class="menu-item-label">Multiple Product image</span>
+        </div><!-- menu-item -->
+      </a><!-- sl-menu-link -->
 
 
     <a href="#" class="sl-menu-link">
