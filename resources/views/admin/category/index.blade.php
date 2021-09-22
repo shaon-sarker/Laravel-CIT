@@ -24,6 +24,7 @@ active
             <table class="table">
                 <th>Sl</th>
                 <th>Categpry Name</th>
+                <th>Category Image</th>
                 <th>Added By</th>
                 <th>Created at</th>
                 <th>Action</th>
@@ -32,6 +33,7 @@ active
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
                     <td>{{ $category->category_name }}</td>
+                    <td><img class="w-25" src="{{ asset('uploads/category') }}/{{ $category->category_image }}" alt=""></td>
                     <td>{{ App\Models\User::find($category->added_by)->name}}</td>
                     <td>{{ $category->created_at->format('d/m/y h:i:s')}}</td>
                     <td><a href="{{ url('/category/delete') }}/{{ $category->id }}" class="btn btn-danger">Delete</a></td>
@@ -43,7 +45,7 @@ active
         </table>
 
         </div>
-        <div class="col-md-4 mt-3">
+        <div class="col-md-3 mt-3">
             <div class="card-header text-white bg-dark">
                 <h4>Add Category</h4>
             </div>
@@ -53,12 +55,21 @@ active
                     {{ session('success') }}
                 </div>
                 @endif
-                <form action="{{ url('/category/insert') }}" method="POST">
+                <form action="{{ url('/category/insert') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Category Name</label>
                         <input type="text" class="form-control" name="category_name">
                         @error('category_name')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category Image</label>
+                        <input type="file" class="form-control" name="category_image">
+                        @error('category_image')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>

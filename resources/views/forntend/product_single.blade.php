@@ -27,10 +27,12 @@
                         <div class="item">
                             <img src="{{ asset('uploads/products') }}/{{ $product_info->product_image }}" alt="">
                         </div>
-                        {{-- <div class="item">
-                            <img src="assets/images/product/product-details/2.jpg" alt="">
-                        </div>
+                        @foreach (App\Models\Productthumbail::where('product_id',$product_info->id)->get() as $product_thambails)
                         <div class="item">
+                            <img src="{{ asset('uploads/products/thumbels') }}/{{ $product_thambails->product_thumbelimage}}" alt="">
+                        </div>
+                        @endforeach
+                        {{-- <div class="item">
                             <img src="assets/images/product/product-details/3.jpg" alt="">
                         </div>
                         <div class="item">
@@ -44,7 +46,12 @@
                         </div> --}}
                     </div>
                     <div class="product-thumbnil-active  owl-carousel">
+                        @foreach (App\Models\Productthumbail::where('product_id',$product_info->id)->get() as $product_thambails)
                         <div class="item">
+                            <img src="{{ asset('uploads/products/thumbels') }}/{{ $product_thambails->product_thumbelimage}}" alt="">
+                        </div>
+                        @endforeach
+                        {{-- <div class="item">
                             <img src="assets/images/product/product-details/1.jpg" alt="">
                         </div>
                         <div class="item">
@@ -61,7 +68,7 @@
                         </div>
                         <div class="item">
                             <img src="assets/images/product/product-details/6.jpg" alt="">
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

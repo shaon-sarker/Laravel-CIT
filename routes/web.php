@@ -36,6 +36,7 @@ use App\Http\Controllers\fornntendController;
 
 
 Route::get('/', [fornntendController::class, 'welcome']);
+// Route::get('/{product_id}', [fornntendController::class, 'modals']);
 Route::get('/product/details/{product_id}', [fornntendController::class, 'product_detail']);
 Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
 

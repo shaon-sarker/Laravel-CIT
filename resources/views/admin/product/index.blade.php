@@ -96,7 +96,16 @@ active
                                     <div class="alert alert-danger">
                                         {{ $message }}
                                     </div>
-                                @enderror
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Product Image</label>
+                                    <input type="file" name="product_thumbelimage[]" multiple class="form-control">
+                                    {{-- @error('product_image')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror --}}
                                 </div>
                                 <div class="form-group">
                                    <button type="submit" class="btn btn-info">Submit</button>
