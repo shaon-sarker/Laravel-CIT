@@ -22,4 +22,10 @@ class fornntendController extends Controller
     // $modal_product = Product::find($product_id);
     // return view('forntend.master',compact('modal_product'));
     // }
+
+    function productshop(){
+        $categories = Category::all();
+        $products = Product::all();
+        return view('forntend.shop', compact('categories','products'));
+    }
 }

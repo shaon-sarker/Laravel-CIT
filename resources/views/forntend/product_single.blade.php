@@ -87,12 +87,19 @@
                         </ul>
                     </div>
                     <p>{{ $product_info->product_description }}</p>
+                    @if ($product_info->product_quantity > 0)
                     <ul class="input-style">
                         <li class="quantity cart-plus-minus">
                             <input type="text" value="1" />
                         </li>
                         <li><a href="cart.html">Add to Cart</a></li>
                     </ul>
+                    @else
+                        <div class="alert alert-danger">
+                             Product Out of Stock
+                        </div>
+                    @endif
+
                     <ul class="cetagory">
                         <li>Categories:</li>
                         <li><a href="#">{{ App\Models\Category::find($product_info->category_id)->category_name }}</a></li>
