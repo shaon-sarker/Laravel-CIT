@@ -73,7 +73,7 @@
                         <div class="featured-img">
                             <img src="{{ asset('uploads/category') }}/{{ $single->category_image }}" alt="">
                             <div class="featured-content">
-                                <a href="shop.html">Pure Honey</a>
+                                <a href="{{ url('/category/product') }}/{{ $single->id }}">{{ $single->category_name }}</a>
                             </div>
                         </div>
                     </div>

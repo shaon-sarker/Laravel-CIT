@@ -88,12 +88,19 @@
                     </div>
                     <p>{{ $product_info->product_description }}</p>
                     @if ($product_info->product_quantity > 0)
-                    <ul class="input-style">
-                        <li class="quantity cart-plus-minus">
-                            <input type="text" value="1" />
-                        </li>
-                        <li><a href="cart.html">Add to Cart</a></li>
-                    </ul>
+
+                    <form action="{{ url('/addto/cart') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product_info->id }}">
+                        <ul class="input-style">
+                            <li class="quantity cart-plus-minus">
+                                <input type="text" name="cart_amount" value="1" />
+                            </li>
+                            <li>
+                                <button type="submit" class="btn btn-danger">Add to Cart</button>
+                            </li>
+                        </ul>
+                    </form>
                     @else
                         <div class="alert alert-danger">
                              Product Out of Stock
