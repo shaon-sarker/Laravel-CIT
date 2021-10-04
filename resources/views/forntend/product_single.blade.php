@@ -109,7 +109,7 @@
 
                     <ul class="cetagory">
                         <li>Categories:</li>
-                        <li><a href="#">{{ App\Models\Category::find($product_info->category_id)->category_name }}</a></li>
+                        <li><a href="#">{{$product_info->relation_to_category_has_one->category_name}}</a></li>
                     </ul>
                     <ul class="socil-icon">
                         <li>Share :</li>

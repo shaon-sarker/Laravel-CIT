@@ -8,6 +8,8 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\EditprofileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\fornntendController;
+use App\Http\Controllers\CouponController;
+
 
 
 
@@ -22,6 +24,15 @@ Route::get('/category/product/{category_id}', [fornntendController::class, 'cate
 
 //Cart ROute
 Route::post('/addto/cart', [CartController::class, 'cart']);
+Route::get('/delete/cart/{cart_id}', [CartController::class, 'deletecart']);
+Route::get('/details/cart', [CartController::class, 'cartdetails']);
+Route::post('/cart/update', [CartController::class, 'cartupdate']);
+
+//Cupon Route
+Route::get('/coupon', [CouponController::class, 'coupon']);
+
+
+
 
 
 

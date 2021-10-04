@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Category;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cookie;
@@ -28,6 +30,27 @@ class CartController extends Controller
         }
 
 
+        return back();
+    }
+
+    function deletecart($cart_id)
+    {
+        Cart::find($cart_id)->delete();
+        return back();
+    }
+
+    function cartdetails()
+    {
+        $carts = Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->get();
+        return view('forntend.cart_details', compact('carts'));
+    }
+    function cartupdate(Request $request)
+    {
+        foreach ($request->cart_amount as $cart_id => $cart_amount) {
+            Cart::find($cart_id)->update([
+                'cart_amount' => $cart_amount,
+            ]);
+        }
         return back();
     }
 }

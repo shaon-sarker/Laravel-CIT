@@ -166,7 +166,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i><span>{{ App\Models\Cart::where('generated_cart_id',Cookie::get('generated_cart_id'))->count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
                                     @php
                                         $sub_total = 0;
@@ -174,14 +174,14 @@
                                     @foreach (App\Models\Cart::where('generated_cart_id',Cookie::get('generated_cart_id'))->get() as $cart_product)
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="assets/images/cart/1.jpg" alt="">
+                                            <img width="60px" src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($cart_product->product_id)->product_image }}" alt="">
                                         </div>
                                         <div class="cart-content">
                                             <a href="cart.html">
                                                 {{App\Models\Product::find($cart_product->product_id)->product_name}}</a>
                                             <span>QTY : {{ $cart_product->cart_amount }}</span>
                                             <p>${{App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount}}</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="{{ url('/delete/cart') }}/{{ $cart_product->id }}"><i class="fa fa-times"></i></a>
                                         </div>
                                     </li>
                                     @php
