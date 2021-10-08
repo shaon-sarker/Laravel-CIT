@@ -26,10 +26,13 @@ Route::get('/category/product/{category_id}', [fornntendController::class, 'cate
 Route::post('/addto/cart', [CartController::class, 'cart']);
 Route::get('/delete/cart/{cart_id}', [CartController::class, 'deletecart']);
 Route::get('/details/cart', [CartController::class, 'cartdetails']);
+Route::get('/details/cart/{coupon_name}', [CartController::class, 'cartdetails']);
 Route::post('/cart/update', [CartController::class, 'cartupdate']);
 
 //Cupon Route
 Route::get('/coupon', [CouponController::class, 'coupon']);
+Route::post('/coupon/insert', [CouponController::class, 'insert']);
+
 
 
 

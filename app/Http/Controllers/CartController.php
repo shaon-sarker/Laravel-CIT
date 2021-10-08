@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
+// use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cookie;
@@ -29,7 +31,6 @@ class CartController extends Controller
             ]);
         }
 
-
         return back();
     }
 
@@ -39,10 +40,23 @@ class CartController extends Controller
         return back();
     }
 
-    function cartdetails()
+    function cartdetails($coupon_name = '')
     {
+        if ($coupon_name == '') {
+            $discount = 0;
+        } else {
+            if (Coupon::where('coupon_name', $coupon_name)->exists()) {
+                if (Carbon::now()->format('Y-d-m') > Coupon::where('coupon_name', $coupon_name)->first()->coupon_validate) {
+                    echo 'date sesh';
+                } else {
+                    $discount = Coupon::where('coupon_name', $coupon_name)->first()->coupon_parcentage;
+                }
+            } else {
+                echo 'nai';
+            }
+        }
         $carts = Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->get();
-        return view('forntend.cart_details', compact('carts'));
+        return view('forntend.cart_details', compact('carts', 'discount'));
     }
     function cartupdate(Request $request)
     {

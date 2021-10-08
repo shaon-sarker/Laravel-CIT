@@ -43,30 +43,30 @@
 
                             @foreach($carts as $cart_detail )
                             <tr>
-                                <td class="images"><img src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($cart_detail->product_id)->product_image }}" alt=""></td>
+                                <td class="images"><img src="{{ asset('uploads/products') }}/{{$cart_detail->relation_to_product_has_one->product_image }}" alt=""></td>
 
-                                <td class="product"><a href="single-product.html">{{App\Models\Product::find($cart_detail->product_id)->product_name}}
+                                <td class="product"><a href="single-product.html">{{$cart_detail->relation_to_product_has_one->product_name}}
                                 </a>
-                                @if ($cart_detail->cart_amount > App\Models\Product::find($cart_detail->product_id)->product_quantity)
+                                @if ($cart_detail->cart_amount > $cart_detail->relation_to_product_has_one->product_quantity)
                                 <span class="badge badge-warning">Stock out</span>
                                 @php
                                     $checkout_btn_show = false;
                                 @endphp
                                 @endif
-                                <span class="badge badge-success"> In Stock {{App\Models\Product::find($cart_detail->product_id)->product_quantity}} </span>
+                                <span class="badge badge-success"> In Stock {{$cart_detail->relation_to_product_has_one->product_quantity}} </span>
                             </td>
 
-                                <td class="ptice">${{App\Models\Product::find($cart_detail->product_id)->product_price}}</td>
+                                <td class="ptice">${{$cart_detail->relation_to_product_has_one->product_price}}</td>
 
                                 <td class="quantity cart-plus-minus">
                                     <input type="text" name="cart_amount[{{ $cart_detail->id }}]" value="{{ $cart_detail->cart_amount }}" />
                                 </td>
 
-                                <td class="total">${{App\Models\Product::find($cart_detail->product_id)->product_price * $cart_detail->cart_amount}}</td>
+                                <td class="total">${{$cart_detail->relation_to_product_has_one->product_price * $cart_detail->cart_amount}}</td>
                                 <td class="remove"><i class="fa fa-times"></i></td>
                             </tr>
                             @php
-                                $total = $total + (App\Models\Product::find($cart_detail->product_id)->product_price * $cart_detail->cart_amount);
+                                $total = $total + ($cart_detail->relation_to_product_has_one->product_price * $cart_detail->cart_amount);
                             @endphp
                             @endforeach
                         </tbody>
@@ -85,8 +85,8 @@
                                 <h3>Cupon</h3>
                                 <p>Enter Your Cupon Code if You Have One</p>
                                 <div class="cupon-wrap">
-                                    <input type="text" placeholder="Cupon Code">
-                                    <button>Apply Cupon</button>
+                                    <input type="text" id="coupon_name" placeholder="Cupon Code">
+                                    <button id="coupon_btn">Apply Cupon</button>
                                 </div>
                             </div>
                         </div>
@@ -94,9 +94,11 @@
                             <div class="cart-total text-right">
                                 <h3>Cart Totals</h3>
                                 <ul>
-                                    <li><span class="pull-left">Total </span>${{ $total }}</li>
-                                    <li><span class="pull-left">Discount </span>100</li>
-                                    <li><span class="pull-left"> SubTotal </span> $380.00</li>
+                                    <li><span class="pull-left">Total </span>{{ $total }}</li>
+                                    <li><span class="pull-left">Discount({{ $discount }})%</span>
+                                        {{ ($total/100)*$discount }}
+                                    </li>
+                                    <li><span class="pull-left"> SubTotal </span>{{$total - ($total/100)*$discount }}</li>
                                 </ul>
                                 @if ($checkout_btn_show)
                                  <a href="checkout.html">Proceed to Checkout</a>
@@ -115,4 +117,15 @@
 </div>
 <!-- cart-area end -->
 <!-- start social-newsletter-section -->
+@endsection
+
+@section('footer_script')
+<script>
+     $('#coupon_btn').click(function(){
+         var coupon_name = $('#coupon_name').val();
+         var current_link = "{{ url('/details/cart/{coupon_name}') }}";
+         var link_to_go = current_link+'/'+coupon_name;
+         window.location.href = link_to_go;
+     });
+</script>
 @endsection

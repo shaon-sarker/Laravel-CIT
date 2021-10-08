@@ -190,7 +190,7 @@
                                     @endforeach
                                     <li>Subtotol: <span class="pull-right">${{  $sub_total  }}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ url('/details/cart') }}" class="btn btn-danger text-white">Check Out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -373,6 +373,7 @@
     <script src="{{ asset('forntend_asset/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('forntend_asset/js/scripts.js') }}"></script>
+    @yield('footer_script')
 </body>
 
 

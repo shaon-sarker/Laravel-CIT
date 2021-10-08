@@ -29,16 +29,16 @@ active
                 <th>Created at</th>
                 <th>Action</th>
             <tbody>
-                {{-- @foreach ($categories as $category )
+                @foreach ($coupons as $coupon )
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
-                    <td>{{ $category->category_name }}</td>
-                    <td><img class="w-25" src="{{ asset('uploads/category') }}/{{ $category->category_image }}" alt=""></td>
-                    <td>{{ App\Models\User::find($category->added_by)->name}}</td>
-                    <td>{{ $category->created_at->format('d/m/y h:i:s')}}</td>
-                    <td><a href="{{ url('/category/delete') }}/{{ $category->id }}" class="btn btn-danger">Delete</a></td>
+                    <td>{{ $coupon->coupon_name }}</td>
+                    <td>{{ $coupon->coupon_parcentage }}</td>
+                    <td>{{ $coupon->coupon_validate }}</td>
+                    <td>{{ $coupon->created_at->diffForHumans()}}</td>
+                    <td><a href="" class="btn btn-danger">Delete</a></td>
                 </tr>
-                @endforeach --}}
+                @endforeach
 
 
             </tbody>
@@ -50,17 +50,17 @@ active
                 <h4>Add Coupon</h4>
             </div>
             <div class="card-body">
-                @if (session('success'))
+                @if (session('coupon'))
                 <div class="alert alert-warning">
-                    {{ session('success') }}
+                    {{ session('coupon') }}
                 </div>
                 @endif
-                <form action="{{ url('/category/insert') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('/coupon/insert') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Category Name</label>
                         <input type="text" class="form-control" name="coupon_name">
-                        @error('category_name')
+                        @error('coupon_name')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
@@ -69,7 +69,7 @@ active
                     <div class="mb-3">
                         <label class="form-label">Coupon_parcentage</label>
                         <input type="text" class="form-control" name="coupon_parcentage">
-                        @error('category_image')
+                        @error('coupon_parcentage')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
@@ -77,8 +77,8 @@ active
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Coupon Validate</label>
-                        <input type="text" class="form-control" name="coupon_validate">
-                        @error('category_image')
+                        <input type="date" class="form-control" name="coupon_validate">
+                        @error('coupon_validate')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>

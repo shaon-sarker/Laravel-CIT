@@ -9,4 +9,9 @@ class Cart extends Model
 {
     use HasFactory;
     protected $fillable = ['cart_amount'];
+
+    function relation_to_product_has_one()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }
