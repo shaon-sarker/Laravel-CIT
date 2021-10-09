@@ -77,7 +77,7 @@
                                     <li><a href="wishlist.html">wishlist</a></li>
                                 </ul>
                             </li>
-                            <li><a href="register.html"> Login/Register </a></li>
+                            <li><a href="{{ url('/register') }}"> Login/Register </a></li>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <div class="col-lg-3 col-md-7 col-sm-6 col-6">
                         <div class="logo">
                             <a href="index.html">
-                        <img src="assets/images/logo.png" alt="">
+                        <img src="{{ asset('forntend_asset/images/logo.png') }}" alt="">
                         </a>
                         </div>
                     </div>

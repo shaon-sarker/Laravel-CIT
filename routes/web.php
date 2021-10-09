@@ -21,6 +21,7 @@ Route::get('/product/details/{product_id}', [fornntendController::class, 'produc
 Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
 Route::get('/product/shop', [fornntendController::class, 'productshop']);
 Route::get('/category/product/{category_id}', [fornntendController::class, 'category_product']);
+Route::get('/checkout', [fornntendController::class, 'checkout']);
 
 //Cart ROute
 Route::post('/addto/cart', [CartController::class, 'cart']);
@@ -75,3 +76,6 @@ Route::get('/product/view/{id}', [ProductController::class, 'signleview']);
 Route::get('/product/edit/{product_id}', [ProductController::class, 'edit']);
 Route::post('/product/update', [ProductController::class, 'update']);
 Route::get('/product/delete/{product_id}', [ProductController::class, 'delete']);
+
+//User role
+Route::post('/user/insert', [HomeController::class, 'userinsert']);

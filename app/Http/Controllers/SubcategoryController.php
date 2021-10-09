@@ -16,64 +16,69 @@ class SubcategoryController extends Controller
         $this->middleware('auth');
     }
 
-    function index(){
+    function index()
+    {
         $categories = Category::all();
         $subcategorys = Subcategory::latest()->get();
         $deleted_subcategories = Subcategory::onlyTrashed()->get();
-        return view('admin.subcategory.index', compact('categories','subcategorys','deleted_subcategories'));
+        return view('admin.subcategory.index', compact('categories', 'subcategorys', 'deleted_subcategories'));
     }
-    function insert(SubcategoryPost $request){
+    function insert(SubcategoryPost $request)
+    {
 
-        if(Subcategory::withTrashed()->where('category_id', $request->category_id)->where('subcategory_name', $request->subcategory_name)->exists())
-        {
-           return back()->with('subcategory_extis', 'Subcategory already exits');
-        }
-        else
-        {
-        //Insert SubCategory
-         Subcategory::insert([
-            'category_id'=>$request->category_id,
-            'subcategory_name'=>$request->subcategory_name,
-            'created_at'=>Carbon::now()
-        ]);
-        return back()->with('success', 'SubCategory Added Succesfully');
+        if (Subcategory::withTrashed()->where('category_id', $request->category_id)->where('subcategory_name', $request->subcategory_name)->exists()) {
+            return back()->with('subcategory_extis', 'Subcategory already exits');
+        } else {
+            //Insert SubCategory
+            Subcategory::insert([
+                'category_id' => $request->category_id,
+                'subcategory_name' => $request->subcategory_name,
+                'created_at' => Carbon::now()
+            ]);
+            return back()->with('success', 'SubCategory Added Succesfully');
         }
     }
-    function delete($subcategory_id){
+    function delete($subcategory_id)
+    {
         Subcategory::find($subcategory_id)->delete();
         return back();
     }
-    function restore($deletesubcategory_id){
+    function restore($deletesubcategory_id)
+    {
         Subcategory::withTrashed()->find($deletesubcategory_id)->restore();
         return back();
     }
-    function perdelete($deletesubcategory_id){
+    function perdelete($deletesubcategory_id)
+    {
         Subcategory::withTrashed()->find($deletesubcategory_id)->forceDelete();
-        return back()->with('delsuccess','SubCategory Delete Successfully');
+        return back()->with('delsuccess', 'SubCategory Delete Successfully');
     }
-    function markdelete(Request $request){
-        if($request->marked_id){
-            foreach($request->marked_id as $single_markid){
+    function markdelete(Request $request)
+    {
+        if ($request->marked_id) {
+            foreach ($request->marked_id as $single_markid) {
                 Subcategory::find($single_markid)->delete();
             }
         }
 
         return back();
     }
-    function edit($subcategory_id){
+    function edit($subcategory_id)
+    {
         $categories = Category::all();
         $subcategories = Subcategory::find($subcategory_id);
-        return view('admin.subcategory.edit', compact('subcategories','categories'));
+        return view('admin.subcategory.edit', compact('subcategories', 'categories'));
     }
     // function update(Request $request){
     //     print_r($request->all());
     // }
-    function update(Request $request){
-      Subcategory::find($request->subcategory_id)->update([
-          'category_id'=>$request->category_id,
-          'subcategory_name'=>$request->subcategory_name,
+    function update(Request $request)
+    {
+        Subcategory::find($request->subcategory_id)->update([
+            'category_id' => $request->category_id,
+            'subcategory_name' => $request->subcategory_name,
 
-      ]);
-      return back()->with('update','update succesfully');
+        ]);
+        return back()->with('update', 'update succesfully');
     }
 }

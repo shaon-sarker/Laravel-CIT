@@ -16,6 +16,8 @@
         <span class="menu-item-label">Dashboard</span>
       </div><!-- menu-item -->
     </a><!-- sl-menu-link -->
+
+    @if (Auth::user()->role == 1)
     <a href="{{ url('/addcategory') }}" class="sl-menu-link @yield('category')">
       <div class="sl-menu-item">
         <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
@@ -41,9 +43,10 @@
       <a href="{{ url('/coupon') }}" class="sl-menu-link @yield('multiple')">
         <div class="sl-menu-item">
           <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-          <span class="menu-item-label">Coupin</span>
+          <span class="menu-item-label">Coupon</span>
         </div><!-- menu-item -->
       </a><!-- sl-menu-link -->
+      @endif
 
 
     <a href="#" class="sl-menu-link">
@@ -82,9 +85,6 @@
           <ul class="list-unstyled user-profile-nav">
             <li><a href="{{ url('/editprofile') }}"><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
             <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-            <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
-            <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
             <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();"><i class="icon ion-power"></i> Sign Out</a>

@@ -86,7 +86,7 @@
                                 <p>Enter Your Cupon Code if You Have One</p>
                                 <div class="cupon-wrap">
                                     <input type="text" id="coupon_name" placeholder="Cupon Code">
-                                    <button id="coupon_btn">Apply Cupon</button>
+                                    <button type="button" id="coupon_btn">Apply Cupon</button>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                     <li><span class="pull-left"> SubTotal </span>{{$total - ($total/100)*$discount }}</li>
                                 </ul>
                                 @if ($checkout_btn_show)
-                                 <a href="checkout.html">Proceed to Checkout</a>
+                                 <a href="{{ url('/checkout') }}">Proceed to Checkout</a>
                                 @else
                                <div class="alert alert-info">
                                 product nai
@@ -123,7 +123,7 @@
 <script>
      $('#coupon_btn').click(function(){
          var coupon_name = $('#coupon_name').val();
-         var current_link = "{{ url('/details/cart/{coupon_name}') }}";
+         var current_link = "{{ url('/details/cart') }}";
          var link_to_go = current_link+'/'+coupon_name;
          window.location.href = link_to_go;
      });
