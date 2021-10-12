@@ -32,9 +32,4 @@ class fornntendController extends Controller
         $category_name = Category::find($category_id);
         return view('forntend.category_product', compact('category_products', 'category_name'));
     }
-
-    function checkout()
-    {
-        return view('forntend.checkout');
-    }
 }

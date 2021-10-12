@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\Country;
+
 // use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,5 +69,22 @@ class CartController extends Controller
             ]);
         }
         return back();
+    }
+
+
+    function checkout()
+    {
+        $countrys = Country::select('id', 'name')->get();
+        return view('forntend.checkout', compact('countrys'));
+    }
+
+    function getcitylist(Request $request)
+    {
+        $cities =  City::where('country_id', $request->country_id)->get();
+        $str_to_send = "<option value=''>--Slect city--</option>";
+        foreach ($cities as $cityname) {
+            $str_to_send .= "<option value=''>" . $cityname->name . "</option>";
+        }
+        echo  $str_to_send;
     }
 }

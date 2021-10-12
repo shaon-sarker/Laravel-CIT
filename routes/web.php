@@ -21,7 +21,9 @@ Route::get('/product/details/{product_id}', [fornntendController::class, 'produc
 Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
 Route::get('/product/shop', [fornntendController::class, 'productshop']);
 Route::get('/category/product/{category_id}', [fornntendController::class, 'category_product']);
-Route::get('/checkout', [fornntendController::class, 'checkout']);
+Route::get('/checkout', [CartController::class, 'checkout']);
+Route::post('/getcitylist', [CartController::class, 'getcitylist']);
+
 
 //Cart ROute
 Route::post('/addto/cart', [CartController::class, 'cart']);

@@ -3,6 +3,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Tohoney - Home Page</title>
     <meta name="description" content="">
@@ -10,6 +11,7 @@
     <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
     <!-- Place favicon.ico in the root directory -->
     <!-- all css here -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- bootstrap v4.0.0-beta.2 css -->
     <link rel="stylesheet" href="{{ asset('forntend_asset/css/bootstrap.min.css') }}">
     <!-- owl.carousel.2.0.0-beta.2.4 css -->
@@ -372,6 +374,7 @@
     <!-- jquery-ui.min.js -->
     <script src="{{ asset('forntend_asset/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('forntend_asset/js/scripts.js') }}"></script>
     @yield('footer_script')
 </body>

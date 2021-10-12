@@ -34,7 +34,6 @@ class ProductController extends Controller
     }
     function insert(ProductPost $request)
     {
-        // die();
         $product_id = Product::insertGetId([
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
@@ -54,7 +53,6 @@ class ProductController extends Controller
         ]);
 
 
-        // $product_id = 10;
         $start = 1;
         foreach ($request->file('product_thumbelimage') as $single_image) {
             $extension = $single_image->getClientOriginalExtension();
@@ -122,23 +120,4 @@ class ProductController extends Controller
         Product::find($product_id)->delete();
         return back()->with('delete', 'Product delete succesfully');
     }
-    // function multipleimage(){
-    //     $multi_pic = multipleimage::all();
-    //     return view('admin.product.multipleimage',compact('multi_pic'));
-    // }
-    // function multiinsert(Request $request){
-    //     $product_id = multipleimage::insertGetId([
-    //         'product_image'=>$request->product_image,
-    //     ]);
-
-    //     $new_product_photo = $request->product_image;
-    //     $extension = $new_product_photo->getClientOriginalExtension();
-    //     $new_profile_name = $product_id.'.'.$extension;
-
-    //     Image::make($new_product_photo)->save(base_path('public/uploads/mutipleproducts/'.$new_profile_name));
-    //     multipleimage::find($product_id)->update([
-    //         'product_image'=>$new_profile_name,
-    //     ]);
-    //     return back();
-    // }
 }

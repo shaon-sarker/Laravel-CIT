@@ -28,113 +28,52 @@
                     <h3>Billing Details</h3>
                     <form action="http://themepresss.com/tf/html/tohoney/checkout">
                         <div class="row">
-                            <div class="col-sm-6 col-12">
+                            <div class="col-sm-12 col-12">
                                 <p>First Name *</p>
-                                <input type="text">
+                                <input type="text" value="{{ Auth::user()->name }}" name="name">
                             </div>
-                            <div class="col-sm-6 col-12">
+                            {{-- <div class="col-sm-6 col-12">
                                 <p>Last Name *</p>
                                 <input type="text">
-                            </div>
-                            <div class="col-12">
+                            </div> --}}
+                            {{-- <div class="col-12">
                                 <p>Compani Name</p>
                                 <input type="text">
-                            </div>
+                            </div> --}}
                             <div class="col-sm-6 col-12">
                                 <p>Email Address *</p>
-                                <input type="email">
+                                <input type="email" value="{{ Auth::user()->email }}" name="email">
                             </div>
                             <div class="col-sm-6 col-12">
                                 <p>Phone No. *</p>
-                                <input type="text">
+                                <input type="text" name="phone">
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <p>Country *</p>
-                                <input type="text">
-                            </div>
-                            <div class="col-12">
-                                <p>Your Address *</p>
-                                <input type="text">
-                            </div>
-                            <div class="col-sm-6 col-12">
-                                <p>Postcode/ZIP</p>
-                                <input type="email">
+                                <select class="js-example-basic-single" name="country_id" id="select_country">
+                                    <option value="">--Select Coountry--</option>
+                                    @foreach ($countrys as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-sm-6 col-12">
                                 <p>Town/City *</p>
-                                <input type="text">
+                                <select class="js-example-basic-single" name="city_id" id="city_select">
+                                    <option value="">--Select City---</option>
+                                </select>
                             </div>
-                            {{-- <div class="col-12">
-                                <input id="toggle1" type="checkbox">
-                                <label for="toggle1">Pure CSS Accordion</label>
-                                <div class="create-account">
-                                    <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                    <span>Account password</span>
-                                    <input type="password">
-                                </div>
+                            <div class="col-6">
+                                <p>Your Address *</p>
+                                <input type="text" name="address">
                             </div>
-                            <div class="col-12">
-                                <input id="toggle2" type="checkbox">
-                                <label class="fontsize" for="toggle2">Ship to a different address?</label>
-                                <div class="row" id="open2">
-                                    <div class="col-12">
-                                        <p>Country</p>
-                                        <select id="s_country">
-                                            <option value="1">Select a country</option>
-                                            <option value="2">bangladesh</option>
-                                            <option value="3">Algeria</option>
-                                            <option value="4">Afghanistan</option>
-                                            <option value="5">Ghana</option>
-                                            <option value="6">Albania</option>
-                                            <option value="7">Bahrain</option>
-                                            <option value="8">Colombia</option>
-                                            <option value="9">Dominican Republic</option>
-                                        </select>
-                                    </div>
-                                    <div class=" col-12">
-                                        <p>First Name</p>
-                                        <input id="s_f_name" type="text" />
-                                    </div>
-                                    <div class=" col-12">
-                                        <p>Last Name</p>
-                                        <input id="s_l_name" type="text" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Company Name</p>
-                                        <input id="s_c_name" type="text" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Address</p>
-                                        <input type="text" placeholder="Street address" />
-                                    </div>
-                                    <div class="col-12">
-                                        <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Town / City </p>
-                                        <input id="s_city" type="text" placeholder="Town / City" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>State / County </p>
-                                        <input id="s_county" type="text" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Postcode / Zip </p>
-                                        <input id="s_zip" type="text" placeholder="Postcode / Zip" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Email Address </p>
-                                        <input id="s_email" type="email" />
-                                    </div>
-                                    <div class="col-12">
-                                        <p>Phone </p>
-                                        <input id="s_phone" type="text" placeholder="Phone Number" />
-                                    </div>
-                                </div>
-                            </div> --}}
+                            <div class="col-sm-6 col-12">
+                                <p>Postcode/ZIP</p>
+                                <input type="text" name="zipcode">
+                            </div>
                             <div class="col-12">
                                 <p>Order Notes </p>
-                                <textarea name="massage" placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
+                                <textarea name="notes" placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
                             </div>
                         </div>
                     </form>
@@ -198,4 +137,36 @@
     </div>
 </div>
 @endauth
+@endsection
+
+@section('footer_script')
+{{-- In your Javascript (external .js resource or <script> tag) --}}
+    <script>
+  $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+
+    $('#select_country').change(function(){
+        var country_id = $('#select_country').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/getcitylist',
+            data:{country_id:country_id},
+            success:function (data) {
+                $('#city_select').html(data);
+            }
+        });
+
+
+
+    })
+    </script>
+
+
+
 @endsection
