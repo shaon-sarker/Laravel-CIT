@@ -32,6 +32,10 @@ Route::get('/details/cart', [CartController::class, 'cartdetails']);
 Route::get('/details/cart/{coupon_name}', [CartController::class, 'cartdetails']);
 Route::post('/cart/update', [CartController::class, 'cartupdate']);
 
+
+Route::post('/order/confirm', [CartController::class, 'order']);
+
+
 //Cupon Route
 Route::get('/coupon', [CouponController::class, 'coupon']);
 Route::post('/coupon/insert', [CouponController::class, 'insert']);

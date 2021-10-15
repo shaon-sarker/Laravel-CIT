@@ -8,7 +8,9 @@ use App\Models\City;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Country;
-
+use App\Models\Orde_Product_Detail;
+use App\Models\Order;
+use App\Models\order_billing_detail;
 // use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,7 +51,7 @@ class CartController extends Controller
             $discount = 0;
         } else {
             if (Coupon::where('coupon_name', $coupon_name)->exists()) {
-                if (Carbon::now()->format('Y-d-m') > Coupon::where('coupon_name', $coupon_name)->first()->coupon_validate) {
+                if (Carbon::now()->format('Y-d-m') < Coupon::where('coupon_name', $coupon_name)->first()->coupon_validate) {
                     echo 'date sesh';
                 } else {
                     $discount = Coupon::where('coupon_name', $coupon_name)->first()->coupon_parcentage;
@@ -81,10 +83,53 @@ class CartController extends Controller
     function getcitylist(Request $request)
     {
         $cities =  City::where('country_id', $request->country_id)->get();
-        $str_to_send = "<option value=''>--Slect city--</option>";
+        $str_to_send = "<option value=''>--Select city--</option>";
         foreach ($cities as $cityname) {
-            $str_to_send .= "<option value=''>" . $cityname->name . "</option>";
+            $str_to_send .= "<option value='" . $cityname->id . "'>" . $cityname->name . "</option>";
         }
         echo  $str_to_send;
+    }
+
+    function order(Request $request)
+    {
+        if ($request->payment_method == 1 || $request->payment_method == 2) {
+            $order_id = Order::insertGetId([
+                'total' => session('total_from_cart'),
+                'discount' => session('discount_from_cart'),
+                'sub_total' => session('total_from_cart') - session('discount_from_cart'),
+                'payment_method' => $request->payment_method,
+                'created_at' => Carbon::now(),
+            ]);
+
+            // echo 'order hoise';
+            order_billing_detail::insert([
+                'order_id' => $order_id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_no' => $request->phone_no,
+                'country_id' => $request->country_id,
+                'city_id' => $request->city_id,
+                'address' => $request->address,
+                'postcode' => $request->postcode,
+                'notes' => $request->notes,
+                'created_at' => Carbon::now(),
+            ]);
+            $carts = Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->get();
+            foreach ($carts as $cart_item) {
+                $product_name = Product::find($cart_item->product_id)->product_name;
+                $product_price = Product::find($cart_item->product_id)->product_price;
+                Orde_Product_Detail::insert([
+                    'order_id' => $order_id,
+                    'product_name' => $product_name,
+                    'product_price' => $product_price,
+                    'product_quantity' => $cart_item->cart_amount,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
+            return back()->with('order', 'order Success');
+        } else {
+            return back()->with('payment', 'payment method select');
+        }
+        // echo 'hoise';
     }
 }

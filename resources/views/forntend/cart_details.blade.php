@@ -100,6 +100,12 @@
                                     </li>
                                     <li><span class="pull-left"> SubTotal </span>{{$total - ($total/100)*$discount }}</li>
                                 </ul>
+                                @php
+                                    session([
+                                'total_from_cart' =>$total,
+                                'discount_from_cart'=>(($total/100)*$discount),
+                            ]);
+                                @endphp
                                 @if ($checkout_btn_show)
                                  <a href="{{ url('/checkout') }}">Proceed to Checkout</a>
                                 @else

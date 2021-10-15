@@ -25,8 +25,14 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="checkout-form form-style">
+                    @if (session('order'))
+                    <div class="alert alert-danger">
+                        {{ session('order') }}
+                    </div>
+                   @endif
                     <h3>Billing Details</h3>
-                    <form action="http://themepresss.com/tf/html/tohoney/checkout">
+                    <form action="{{ url('/order/confirm') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-sm-12 col-12">
                                 <p>First Name *</p>
@@ -42,11 +48,11 @@
                             </div> --}}
                             <div class="col-sm-6 col-12">
                                 <p>Email Address *</p>
-                                <input type="email" value="{{ Auth::user()->email }}" name="email">
+                                <input type="text" value="{{ Auth::user()->email }}" name="email">
                             </div>
                             <div class="col-sm-6 col-12">
                                 <p>Phone No. *</p>
-                                <input type="text" name="phone">
+                                <input type="text" name="phone_no">
                             </div>
                             <div class="col-6">
                                 <p>Country *</p>
@@ -59,7 +65,7 @@
                             </div>
                             <div class="col-sm-6 col-12">
                                 <p>Town/City *</p>
-                                <select class="js-example-basic-single" name="city_id" id="city_select">
+                                <select name="city_id" id="city_select">
                                     <option value="">--Select City---</option>
                                 </select>
                             </div>
@@ -69,46 +75,54 @@
                             </div>
                             <div class="col-sm-6 col-12">
                                 <p>Postcode/ZIP</p>
-                                <input type="text" name="zipcode">
+                                <input type="text" name="postcode">
                             </div>
                             <div class="col-12">
                                 <p>Order Notes </p>
                                 <textarea name="notes" placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
                             </div>
                         </div>
-                    </form>
+
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="order-area">
                     <h3>Your Order</h3>
                     <ul class="total-cost">
-                        <li>Pure Nature Honey <span class="pull-right">$139.00</span></li>
+                        {{-- <li>Pure Nature Honey <span class="pull-right">$139.00</span></li>
                         <li>Your Product Name <span class="pull-right">$100.00</span></li>
-                        <li>Pure Nature Honey <span class="pull-right">$141.00</span></li>
-                        <li>Subtotal <span class="pull-right"><strong>$380.00</strong></span></li>
-                        <li>Shipping <span class="pull-right">Free</span></li>
-                        <li>Total<span class="pull-right">$380.00</span></li>
+                        <li>Pure Nature Honey <span class="pull-right">$141.00</span></li> --}}
+                        <li>Total <span class="pull-right"><strong>{{ session('total_from_cart') }}</strong></span></li>
+                        <li>Discount <span class="pull-right">{{ session('discount_from_cart') }}</span></li>
+                        <li>Subtotal<span class="pull-right">{{ session('total_from_cart') - session('discount_from_cart') }}</span></li>
                     </ul>
                     <ul class="payment-method">
-                        <li>
+                        {{-- <li>
                             <input id="bank" type="checkbox">
                             <label for="bank">Direct Bank Transfer</label>
                         </li>
                         <li>
                             <input id="paypal" type="checkbox">
                             <label for="paypal">Paypal</label>
-                        </li>
+                        </li> --}}
                         <li>
-                            <input id="card" type="checkbox">
+                            <input value="2" id="delivery" type="radio" name="payment_method">
                             <label for="card">Credit Card</label>
                         </li>
                         <li>
-                            <input id="delivery" type="checkbox">
+                            <input value="1" id="delivery" type="radio" name="payment_method">
                             <label for="delivery">Cash on Delivery</label>
                         </li>
+                        <li>
+                            @if (session('payment'))
+                                <div class="alert alert-danger">
+                                    {{ session('payment') }}
+                                </div>
+                            @endif
+                        </li>
                     </ul>
-                    <button>Place Order</button>
+                    <button type="submit">Place Order</button>
+                </form>
                 </div>
             </div>
         </div>
