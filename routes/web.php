@@ -9,6 +9,8 @@ use App\Http\Controllers\EditprofileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\fornntendController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\SslCommerzPaymentController;
+
 
 
 
@@ -85,3 +87,26 @@ Route::get('/product/delete/{product_id}', [ProductController::class, 'delete'])
 
 //User role
 Route::post('/user/insert', [HomeController::class, 'userinsert']);
+
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/online/payment', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
+
+//PDF Download
+Route::get('/invoice/download/{order_id}', [HomeController::class, 'invoicedownload']);
+
+
+//PDF Download
+Route::get('/search', [HomeController::class, 'search']);

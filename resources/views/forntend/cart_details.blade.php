@@ -22,6 +22,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                @if (session('order'))
+                <div class="alert alert-danger">
+                    {{ session('order') }}
+                </div>
+               @endif
                 <form action="{{ url('/cart/update') }}" method="POST">
                     @csrf
                     <table class="table-responsive cart-wrap">
@@ -41,7 +46,7 @@
                             $checkout_btn_show = true;
                             @endphp
 
-                            @foreach($carts as $cart_detail )
+                            @forelse($carts as $cart_detail )
                             <tr>
                                 <td class="images"><img src="{{ asset('uploads/products') }}/{{$cart_detail->relation_to_product_has_one->product_image }}" alt=""></td>
 
@@ -68,7 +73,11 @@
                             @php
                                 $total = $total + ($cart_detail->relation_to_product_has_one->product_price * $cart_detail->cart_amount);
                             @endphp
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="6">No Data SHow</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
 
@@ -88,6 +97,16 @@
                                     <input type="text" id="coupon_name" placeholder="Cupon Code">
                                     <button type="button" id="coupon_btn">Apply Cupon</button>
                                 </div>
+                                @if (session('coupon_expried'))
+                                <div class="alert alert-warning">
+                                    {{ session('coupon_expried') }}
+                                </div>
+                                @endif
+                                @if (session('coupon_invalid'))
+                                    <div class="alert alert-warning">
+                                        {{ session('coupon_invalid') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-xl-3 offset-xl-5 col-lg-4 offset-lg-3 col-md-6">
@@ -104,7 +123,7 @@
                                     session([
                                 'total_from_cart' =>$total,
                                 'discount_from_cart'=>(($total/100)*$discount),
-                            ]);
+                               ]);
                                 @endphp
                                 @if ($checkout_btn_show)
                                  <a href="{{ url('/checkout') }}">Proceed to Checkout</a>

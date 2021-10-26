@@ -25,11 +25,6 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="checkout-form form-style">
-                    @if (session('order'))
-                    <div class="alert alert-danger">
-                        {{ session('order') }}
-                    </div>
-                   @endif
                     <h3>Billing Details</h3>
                     <form action="{{ url('/order/confirm') }}" method="POST">
                         @csrf
@@ -110,8 +105,8 @@
                             <label for="card">Credit Card</label>
                         </li>
                         <li>
-                            <input value="1" id="delivery" type="radio" name="payment_method">
-                            <label for="delivery">Cash on Delivery</label>
+                            <input value="1" id="delivery2" type="radio" name="payment_method">
+                            <label for="delivery2">Cash on Delivery</label>
                         </li>
                         <li>
                             @if (session('payment'))

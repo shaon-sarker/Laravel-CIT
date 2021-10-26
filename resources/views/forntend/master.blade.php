@@ -46,9 +46,9 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-12">
                     <div class="search-form">
-                        <form action="#">
-                            <input type="text" placeholder="Search Here...">
-                            <button><i class="fa fa-search"></i></button>
+                        <form action="{{ url('/search') }}" method="GET">
+                            <input type="text" name="q" placeholder="Search Here...">
+                            <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                 </div>

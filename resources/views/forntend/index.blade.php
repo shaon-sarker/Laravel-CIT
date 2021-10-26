@@ -305,7 +305,7 @@
             </li>
 
 
-            <!-- Modal area start -->
+<!-- Modal area start -->
 
  <div class="modal fade" id="{{ $product->id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">

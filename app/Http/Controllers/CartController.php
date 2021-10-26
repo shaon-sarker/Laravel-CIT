@@ -11,10 +11,10 @@ use App\Models\Country;
 use App\Models\Orde_Product_Detail;
 use App\Models\Order;
 use App\Models\order_billing_detail;
-// use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cookie;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -52,17 +52,21 @@ class CartController extends Controller
         } else {
             if (Coupon::where('coupon_name', $coupon_name)->exists()) {
                 if (Carbon::now()->format('Y-d-m') < Coupon::where('coupon_name', $coupon_name)->first()->coupon_validate) {
-                    echo 'date sesh';
+                    // echo 'date sesh';
+                    return back()->with('coupon_expried', 'Coupon Expried');
                 } else {
                     $discount = Coupon::where('coupon_name', $coupon_name)->first()->coupon_parcentage;
                 }
             } else {
-                echo 'nai';
+                // echo 'nai';
+                return back()->with('coupon_invalid', 'Coupon Invalid');
             }
         }
         $carts = Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->get();
         return view('forntend.cart_details', compact('carts', 'discount'));
     }
+
+
     function cartupdate(Request $request)
     {
         foreach ($request->cart_amount as $cart_id => $cart_amount) {
@@ -94,6 +98,7 @@ class CartController extends Controller
     {
         if ($request->payment_method == 1 || $request->payment_method == 2) {
             $order_id = Order::insertGetId([
+                'user_id' => Auth::id(),
                 'total' => session('total_from_cart'),
                 'discount' => session('discount_from_cart'),
                 'sub_total' => session('total_from_cart') - session('discount_from_cart'),
@@ -126,7 +131,13 @@ class CartController extends Controller
                     'created_at' => Carbon::now(),
                 ]);
             }
-            return back()->with('order', 'order Success');
+
+            if ($request->payment_method == 1) {
+                Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->delete();
+            } else {
+                return redirect('/online/payment');
+            }
+            return redirect('/details/cart')->with('order', 'order Success');
         } else {
             return back()->with('payment', 'payment method select');
         }
