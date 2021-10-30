@@ -48,6 +48,11 @@
                     <div class="search-form">
                         <form action="{{ url('/search') }}" method="GET">
                             <input type="text" name="q" placeholder="Search Here...">
+                            <select name="order_by" class="form-control">
+                                <option value="">--Search By--</option>
+                                <option value="1">Order(A-Z)</option>
+                                <option value="2">Order(Z-A)</option>
+                            </select>
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>

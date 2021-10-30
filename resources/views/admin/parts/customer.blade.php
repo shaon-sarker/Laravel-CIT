@@ -32,6 +32,8 @@
                                 <td>{{ $orders->sub_total }}</td>
                                 <td>
                                     <a href="{{ url('/invoice/download') }}/{{ $orders->id }}" class="btn btn-primary">Download</a>
+                                    <a href="{{ url('/invoice/send') }}/{{ $orders->id }}" class="btn btn-info">Send Invoice</a>
+
                                 </td>
                             </tr>
                         @empty

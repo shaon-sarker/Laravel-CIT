@@ -10,8 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\fornntendController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SslCommerzPaymentController;
-
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+// use App\Http\Controllers\Sendinvoice;
 
 
 
@@ -51,7 +51,7 @@ Route::post('/coupon/insert', [CouponController::class, 'insert']);
 
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');;
 
 //Category Route
 Route::get('/addcategory', [CategoryController::class, 'index']);
@@ -107,6 +107,26 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //PDF Download
 Route::get('/invoice/download/{order_id}', [HomeController::class, 'invoicedownload']);
 
+//PDF send
+Route::get('/invoice/send/{order_id}', [HomeController::class, 'invoicesend']);
 
-//PDF Download
+
+//search
 Route::get('/search', [HomeController::class, 'search']);
+
+//EMail verify
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

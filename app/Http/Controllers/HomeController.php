@@ -8,7 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use PDF;
+use App\Mail\SendMail;
+
 
 class HomeController extends Controller
 {
@@ -62,7 +65,20 @@ class HomeController extends Controller
     function search()
     {
         $q = $_GET['q'];
-        $search_result = Product::where('product_name', 'like', '%' . $q . '%')->get();
+        $order_by = $_GET['order_by'];
+        if ($order_by == 1) {
+            $search_result = Product::where('product_name', 'like', '%' . $q . '%')->orderBy('product_name', 'asc')->get();
+        } else {
+            $search_result = Product::where('product_name', 'like', '%' . $q . '%')->orderBy('product_name', 'desc')->get();
+        }
+
         return view('forntend.search', compact('search_result'));
+    }
+
+
+    function invoicesend($order_id)
+    {
+        $shaon = Order::where('id', $order_id)->get();
+        Mail::to(Auth::user()->email)->send(new SendMail($shaon));
     }
 }

@@ -45,7 +45,6 @@
                 <input type="hidden" value="{{ csrf_token() }}" name="_token" />
                 <input type="hidden" value="{{ session('total_from_cart') - session('discount_from_cart') }}" name="final_subtotal" />
 
-
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your cart</span>
                     {{-- <span class="badge badge-secondary badge-pill">3</span> --}}
