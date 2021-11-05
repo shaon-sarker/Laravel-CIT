@@ -78,6 +78,8 @@ class HomeController extends Controller
 
     function invoicesend($order_id)
     {
+        // echo $order_id;
+        // die();
         $shaon = Order::where('id', $order_id)->get();
         Mail::to(Auth::user()->email)->send(new SendMail($shaon));
     }

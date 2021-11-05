@@ -42,6 +42,10 @@ Route::post('/order/confirm', [CartController::class, 'order']);
 Route::get('/coupon', [CouponController::class, 'coupon']);
 Route::post('/coupon/insert', [CouponController::class, 'insert']);
 
+//review route
+Route::post('/review', [fornntendController::class, 'review']);
+
+
 
 
 
@@ -107,12 +111,14 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //PDF Download
 Route::get('/invoice/download/{order_id}', [HomeController::class, 'invoicedownload']);
 
-//PDF send
+//PDF invoice send
 Route::get('/invoice/send/{order_id}', [HomeController::class, 'invoicesend']);
 
 
 //search
 Route::get('/search', [HomeController::class, 'search']);
+
+
 
 //EMail verify
 Route::get('/email/verify', function () {

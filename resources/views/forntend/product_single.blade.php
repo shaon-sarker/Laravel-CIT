@@ -76,14 +76,43 @@
                 <div class="product-single-content">
                     <h3>{{ $product_info->product_name }}</h3>
                     <div class="rating-wrap fix">
-                        <span class="pull-left">${{ $product_info->product_price }}</span>
+                        <span class="pull-left">BDT {{ $product_info->product_price }}</span>
                         <ul class="rating pull-right">
+                            @php
+                                $star_amount_count = (App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->sum('start')) / App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->count('start');
+                                $star_amount = round($star_amount_count);
+                                // echo $star_amount;
+                            @endphp
+                            @if ($star_amount == 1)
+                               <li><i class="fa fa-star"></i></li>
+                            @elseif($star_amount == 2)
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            @elseif ($star_amount == 3)
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            @elseif ($star_amount == 4)
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            @elseif ($star_amount == 5)
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star"></i></li>
                             <li><i class="fa fa-star"></i></li>
-                            <li>(05 Customar Review)</li>
+                            @else
+                            No Review yet
+                            @endif
+
+                            {{-- <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li> --}}
+                            {{-- {{ App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->sum('start') }} --}}
+                            <li>({{ App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->count('start') }} Customar Review)</li>
                         </ul>
                     </div>
                     <p>{{ $product_info->product_description }}</p>
@@ -197,24 +226,45 @@
                     <div class="tab-pane" id="review">
                         <div class="review-wrap">
                             <ul>
+                                @foreach (App\Models\Order::where('product_id',$product_info->id)->whereNotNull('review')->get() as $review)
                                 <li class="review-items">
                                     <div class="review-img">
                                         <img src="assets/images/comment/1.png" alt="">
                                     </div>
                                     <div class="review-content">
-                                        <h3><a href="#">GERALD BARNES</a></h3>
-                                        <span>27 Jun, 2019 at 2:30pm</span>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
+                                        <h3><a href="#">{{ App\Models\User::find($review->user_id)->name }}</a></h3>
+                                        <span>{{ $review->updated_at->diffForHumans() }}</span>
+                                        <p>{{ $review->review }}</p>
                                         <ul class="rating">
+                                            @if ($review->start == 1)
+                                                <li><i class="fa fa-star"></i></li>
+                                            @elseif ($review->start == 2)
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            @elseif ($review->start == 3)
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            @elseif ($review->start == 4)
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            <li><i class="fa fa-star"></i></li>
+                                            @elseif ($review->start == 5)
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
+                                            @else
+                                                No Review yet
+                                            @endif
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="review-items">
+                                @endforeach
+
+                                {{-- <li class="review-items">
                                     <div class="review-img">
                                         <img src="assets/images/comment/2.png" alt="">
                                     </div>
@@ -247,9 +297,11 @@
                                             <li><i class="fa fa-star-o"></i></li>
                                         </ul>
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
+                        @auth
+                        @if (App\Models\Order::where('user_id', Auth::id())->where('product_id',$product_info->id)->whereNull('review')->exists())
                         <div class="add-review">
                             <h4>Add A Review</h4>
                             <div class="ratting-wrap">
@@ -264,23 +316,26 @@
                                             <th>5 Star</th>
                                         </tr>
                                     </thead>
+                                <form action="{{ url('/review') }}" method="POST">
+                                    @csrf
                                     <tbody>
                                         <tr>
                                             <td>How Many Stars?</td>
                                             <td>
-                                                <input type="radio" name="a" />
+                                                <input value="{{ $product_info->id }}" type="hidden" name="product_id" />
+                                                <input value="1" type="radio" name="start" />
                                             </td>
                                             <td>
-                                                <input type="radio" name="a" />
+                                                <input value="2" type="radio" name="start" />
                                             </td>
                                             <td>
-                                                <input type="radio" name="a" />
+                                                <input value="3" type="radio" name="start" />
                                             </td>
                                             <td>
-                                                <input type="radio" name="a" />
+                                                <input value="4" type="radio" name="start" />
                                             </td>
                                             <td>
-                                                <input type="radio" name="a" />
+                                                <input value="5" type="radio" name="start" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -289,21 +344,37 @@
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <h4>Name:</h4>
-                                    <input type="text" placeholder="Your name here..." />
+                                    <input value="{{ Auth::user()->name }}" type="text" placeholder="Your name here..." />
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <h4>Email:</h4>
-                                    <input type="email" placeholder="Your Email here..." />
+                                    <input value="{{ Auth::user()->email }}" type="email" placeholder="Your Email here..." />
                                 </div>
                                 <div class="col-12">
                                     <h4>Your Review:</h4>
-                                    <textarea name="massage" id="massage" cols="30" rows="10" placeholder="Your review here..."></textarea>
+                                    <textarea name="review" id="massage" cols="30" rows="10" placeholder="Your review here..."></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn-style">Submit</button>
+                                    <button type="submit" class="btn-style">Submit</button>
                                 </div>
                             </div>
+                        </form>
                         </div>
+                        @else
+                        <div class="ml-3">
+                            <div class="alert alert-warning">
+                                <h5>You have alredy Review this product or You didnot purchase this product</h5>
+                            </div>
+                        </div>
+                        @endif
+                        @else
+                        <div class="ml-3">
+                            <div class="alert alert-warning">
+                                <h4>Please Login for Review<a href="{{ url('/login') }}" class="btn btn-primary float-right">Login</a></h4>
+                            </div>
+                        </div>
+                        @endauth
+
                     </div>
                 </div>
             </div>
