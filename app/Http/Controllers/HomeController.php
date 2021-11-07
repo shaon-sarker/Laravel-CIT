@@ -83,4 +83,32 @@ class HomeController extends Controller
         $shaon = Order::where('id', $order_id)->get();
         Mail::to(Auth::user()->email)->send(new SendMail($shaon));
     }
+
+    function Smssend($order_id)
+    {
+        $order_details = Order::find($order_id);
+        $order_id = $order_details->id;
+        $order_subtotal = $order_details->sub_total;
+        $order_phoneno = $order_details->phone;
+        $url = "http://66.45.237.70/api.php";
+        $number = $order_phoneno;
+        $text = "Your Order ID:" . $order_id . ' ' . 'Total Payment: ' . $order_subtotal;
+        $data = array(
+            'username' => "shaon54",
+            'password' => "NZXWRD97",
+            'number' => "$number",
+            'message' => "$text"
+        );
+
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|", $smsresult);
+        $sendstatus = $p[0];
+        if ($sendstatus == 1101) {
+            echo 'Message Sent Successfully';
+        }
+    }
 }

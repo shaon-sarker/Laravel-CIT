@@ -146,15 +146,16 @@
             <div class="col-12">
                 <div class="section-title">
                     <h2>Best Seller</h2>
-                    <img src="assets/images/section-title.png" alt="">
+                    {{-- <img src="assets/images/section-title.png" alt=""> --}}
                 </div>
             </div>
         </div>
         <ul class="row">
+            @foreach ($best_selleing_products as $best_product)
             <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
                 <div class="product-wrap">
                     <div class="product-img">
-                        <img src="assets/images/product/1.jpg" alt="">
+                        <img src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($best_product->product_id)->product_image }}" alt="">
                         <div class="product-icon flex-style">
                             <ul>
                                 <li><a data-toggle="modal" data-target="#exampleModalCenter" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
@@ -164,8 +165,8 @@
                         </div>
                     </div>
                     <div class="product-content">
-                        <h3><a href="single-product.html">Nature Honey</a></h3>
-                        <p class="pull-left">$125
+                        <h3><a href="{{ url('/product/details') }}/{{ $best_product->product_id }}">{{ App\Models\Product::find($best_product->product_id)->product_name }}</a></h3>
+                        <p class="pull-left">BDT {{ App\Models\Product::find($best_product->product_id)->product_price }}
 
                         </p>
                         <ul class="pull-right d-flex">
@@ -178,7 +179,9 @@
                     </div>
                 </div>
             </li>
-            <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
+            @endforeach
+
+            {{-- <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
                 <div class="product-wrap">
                     <div class="product-img">
                         <img src="assets/images/product/2.jpg" alt="">
@@ -258,7 +261,7 @@
                         </ul>
                     </div>
                 </div>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>

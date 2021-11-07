@@ -114,6 +114,10 @@ Route::get('/invoice/download/{order_id}', [HomeController::class, 'invoicedownl
 //PDF invoice send
 Route::get('/invoice/send/{order_id}', [HomeController::class, 'invoicesend']);
 
+//SMS Send
+Route::get('/invoice/smssend/{order_id}', [HomeController::class, 'Smssend']);
+
+
 
 //search
 Route::get('/search', [HomeController::class, 'search']);

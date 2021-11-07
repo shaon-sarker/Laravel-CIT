@@ -14,8 +14,12 @@ class fornntendController extends Controller
     {
         $category = Category::all();
         $products = Product::all();
-        // $modal_product = Product::find($product_id);
-        return view('forntend.index', compact('category', 'products'));
+        // $best_selleing = Product::all();
+        $best_selleing_products = Order::groupBy('product_id')
+            ->selectRaw('sum(product_quantity) as sum')
+            ->selectRaw('product_id')
+            ->get();
+        return view('forntend.index', compact('category', 'products', 'best_selleing_products'));
     }
     function product_detail($product_id)
     {
