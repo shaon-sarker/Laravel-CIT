@@ -21,6 +21,10 @@ class fornntendController extends Controller
             ->get();
         return view('forntend.index', compact('category', 'products', 'best_selleing_products'));
     }
+    function aboutpage()
+    {
+        return view('forntend.about');
+    }
     function product_detail($product_id)
     {
         $product_info = Product::find($product_id);

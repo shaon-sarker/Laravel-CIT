@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\EditprofileController;
@@ -19,6 +20,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 //Frontend Route
 Route::get('/', [fornntendController::class, 'welcome']);
+Route::get('/about', [fornntendController::class, 'aboutpage']);
+
 Route::get('/product/details/{product_id}', [fornntendController::class, 'product_detail']);
 Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
 Route::get('/product/shop', [fornntendController::class, 'productshop']);
@@ -140,3 +143,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+///APi Infos
+Route::get('/apimovies', [ApiController::class, 'apiwork']);
