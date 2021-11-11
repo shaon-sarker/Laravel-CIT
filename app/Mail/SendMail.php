@@ -8,8 +8,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendMail extends Mailable
+class SendMail extends Mailable implements ShouldQueue
 {
+    use Queueable;
     protected $dynamic_data = '';
     use Queueable, SerializesModels;
 

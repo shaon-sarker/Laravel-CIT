@@ -82,6 +82,7 @@ class HomeController extends Controller
         // die();
         $shaon = Order::where('id', $order_id)->get();
         Mail::to(Auth::user()->email)->send(new SendMail($shaon));
+        return redirect()->back();
     }
 
     function Smssend($order_id)

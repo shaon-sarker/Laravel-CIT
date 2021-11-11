@@ -35,23 +35,44 @@ class SubcategoryController extends Controller
                 'subcategory_name' => $request->subcategory_name,
                 'created_at' => Carbon::now()
             ]);
-            return back()->with('success', 'SubCategory Added Succesfully');
+            $notification = array(
+                'message' => 'SubCategory Added Succesfully',
+                'alert-type' => 'success'
+            );
+            return back()->with($notification);
         }
     }
     function delete($subcategory_id)
     {
         Subcategory::find($subcategory_id)->delete();
-        return back();
+
+        $notification = array(
+            'message' => 'SubCategory delete Succesfully',
+            'alert-type' => 'warning'
+        );
+        return back()->with($notification);
+        // return back();
     }
     function restore($deletesubcategory_id)
     {
         Subcategory::withTrashed()->find($deletesubcategory_id)->restore();
-        return back();
+
+        $notification = array(
+            'message' => 'SubCategory Undo Succesfully',
+            'alert-type' => 'info'
+        );
+        return back()->with($notification);
+        // return back();
     }
     function perdelete($deletesubcategory_id)
     {
         Subcategory::withTrashed()->find($deletesubcategory_id)->forceDelete();
-        return back()->with('delsuccess', 'SubCategory Delete Successfully');
+        $notification = array(
+            'message' => 'SubCategory Permanent delete Succesfully',
+            'alert-type' => 'warning'
+        );
+        return back()->with($notification);
+        // return back()->with('delsuccess', 'SubCategory Delete Successfully');
     }
     function markdelete(Request $request)
     {
@@ -79,6 +100,13 @@ class SubcategoryController extends Controller
             'subcategory_name' => $request->subcategory_name,
 
         ]);
-        return back()->with('update', 'update succesfully');
+
+        $notification = array(
+            'message' => 'SubCategory Update Succesfully',
+            'alert-type' => 'info'
+        );
+        return back()->with($notification);
+
+        // return back()->with('update', 'update succesfully');
     }
 }

@@ -38,6 +38,7 @@
 
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('starlight_dashboad/css/starlight.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
   </head>
 
 <body>
@@ -49,6 +50,7 @@
     <script src="{{ asset('starlight_dashboad/lib/bootstrap/bootstrap.js') }}"></script>
     <script src="{{ asset('starlight_dashboad/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js') }}"></script>
     <script src="{{ asset('starlight_dashboad/js/starlight.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @yield('footer_script')
 </body>
 </html>
