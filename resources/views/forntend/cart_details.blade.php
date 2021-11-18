@@ -122,6 +122,7 @@
                                 @php
                                     session([
                                 'total_from_cart' =>$total,
+                                // 'product_id' =>$cart_detail->product_id,
                                 'discount_from_cart'=>(($total/100)*$discount),
                                ]);
                                 @endphp

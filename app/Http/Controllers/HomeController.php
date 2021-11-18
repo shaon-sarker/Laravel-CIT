@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use App\Mail\SendMail;
+use Session;
 
 
 class HomeController extends Controller
@@ -32,6 +33,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // if (Session::get('lastpage') == $_GET['lastpage']) {
+        //     return redirect('checkout');
+        // } else
         $user_id = Auth::id();
         $users = User::where('id', '!=', $user_id)->orderBy('id', 'asc')->simplePaginate(3);
         $total_user = User::count();

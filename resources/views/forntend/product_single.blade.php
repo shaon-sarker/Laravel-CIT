@@ -79,9 +79,13 @@
                         <span class="pull-left">BDT {{ $product_info->product_price }}</span>
                         <ul class="rating pull-right">
                             @php
+                            if (App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->count('start')  == 0){
+                                $star_amount = 0;
+                            }
+                            else {
                                 $star_amount_count = (App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->sum('start')) / App\Models\Order::where('product_id',$product_info->id)->whereNotNull('start')->count('start');
                                 $star_amount = round($star_amount_count);
-                                // echo $star_amount;
+                            }
                             @endphp
                             @if ($star_amount == 1)
                                <li><i class="fa fa-star"></i></li>

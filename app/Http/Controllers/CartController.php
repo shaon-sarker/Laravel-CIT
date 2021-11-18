@@ -99,6 +99,7 @@ class CartController extends Controller
         if ($request->payment_method == 1 || $request->payment_method == 2) {
             $order_id = Order::insertGetId([
                 'user_id' => Auth::id(),
+                'product_id' => session('product_id'),
                 'total' => session('total_from_cart'),
                 'discount' => session('discount_from_cart'),
                 'sub_total' => session('total_from_cart') - session('discount_from_cart'),
@@ -130,6 +131,7 @@ class CartController extends Controller
                     'product_quantity' => $cart_item->cart_amount,
                     'created_at' => Carbon::now(),
                 ]);
+                Product::find($cart_item->product_id)->decrement('product_quantity', $cart_item->product_quantity);
             }
 
             if ($request->payment_method == 1) {
@@ -137,6 +139,7 @@ class CartController extends Controller
             } else {
                 return redirect('/online/payment');
             }
+
             return redirect('/details/cart')->with('order', 'order Success');
         } else {
             return back()->with('payment', 'payment method select');
