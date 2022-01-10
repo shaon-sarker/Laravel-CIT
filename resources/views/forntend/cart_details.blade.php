@@ -54,9 +54,9 @@
                                 </a>
                                 @if ($cart_detail->cart_amount > $cart_detail->relation_to_product_has_one->product_quantity)
                                 <span class="badge badge-warning">Stock out</span>
-                                @php
-                                    $checkout_btn_show = false;
-                                @endphp
+									@php
+										$checkout_btn_show = false;
+									@endphp
                                 @endif
                                 <span class="badge badge-success"> In Stock {{$cart_detail->relation_to_product_has_one->product_quantity}} </span>
                             </td>

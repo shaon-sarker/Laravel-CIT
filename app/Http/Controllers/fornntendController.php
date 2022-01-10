@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\HomeSeo;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
 
 class fornntendController extends Controller
 {
@@ -19,6 +24,25 @@ class fornntendController extends Controller
             ->selectRaw('sum(product_quantity) as sum')
             ->selectRaw('product_id')
             ->get();
+
+        $homeseo = HomeSeo::all();
+
+        SEOMeta::setTitle($homeseo[0]['title']);
+        SEOMeta::setDescription($homeseo[0]['description']);
+        SEOMeta::setCanonical('https://codecasts.com.br/lesson');
+
+        OpenGraph::setDescription($homeseo[0]['description']);
+        OpenGraph::setTitle($homeseo[0]['title']);
+        OpenGraph::setUrl('http://current.url.com');
+        OpenGraph::addProperty('type', 'articles');
+
+        TwitterCard::setTitle($homeseo[0]['title']);
+        TwitterCard::setSite('@LuizVinicius73');
+
+        JsonLd::setTitle($homeseo[0]['title']);
+        JsonLd::setDescription($homeseo[0]['description']);
+        JsonLd::addImage($homeseo[0]['page_image']);
+
         return view('forntend.index', compact('category', 'products', 'best_selleing_products'));
     }
     function aboutpage()

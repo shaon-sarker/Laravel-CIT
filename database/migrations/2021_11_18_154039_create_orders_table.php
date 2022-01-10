@@ -18,10 +18,13 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id');
             $table->integer('product_id')->nullable();
             $table->integer('product_quantity')->nullable();
+            $table->integer('phone_no')->nullable();
             $table->integer('total');
             $table->integer('discount');
             $table->integer('sub_total');
             $table->integer('payment_method');
+            $table->string('review')->nullable();
+            $table->integer('start')->nullable();
             $table->timestamps();
         });
     }

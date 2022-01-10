@@ -1,11 +1,34 @@
-
 <!doctype html>
 <html class="no-js" lang="en">
+
 <head>
+
+    {!! SEOMeta::generate() !!}
+    {!! OpenGraph::generate() !!}
+    {!! Twitter::generate() !!}
+    {!! JsonLd::generate() !!}
+
+    {{-- <meta property="og:url"
+        content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="When Great Minds Don’t Think Alike" />
+    <meta property="og:description" content="How much does culture influence creative thinking?" />
+    <meta property="og:image"
+        content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+
+    <meta name="twitter:card" content="[Preview Type]" />
+    <meta name="twitter:creator" content="[@Your-twitter-handle] (optional)" />
+    <meta name="twitter:site" content="[@Your-twitter-site-handle (optional)]" />
+    <meta name="twitter:image" content="[Image URL]" />
+    <meta name="twitter:description" content=[Page description] /> --}}
+
+    {{-- <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="John Doe"> --}}
+
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Tohoney - Home Page</title>
+    {{-- <title>Tohoney - Home Page</title> --}}
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
@@ -75,7 +98,8 @@
                     <div class="col-md-6 col-12">
                         <ul class="d-flex account_login-area">
                             <li>
-                                <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i class="fa fa-angle-down"></i></a>
+                                <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i
+                                        class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style">
                                     <li><a href="login.html">Login</a></li>
                                     <li><a href="register.html">Register</a></li>
@@ -96,8 +120,8 @@
                     <div class="col-lg-3 col-md-7 col-sm-6 col-6">
                         <div class="logo">
                             <a href="index.html">
-                        <img src="{{ asset('forntend_asset/images/logo.png') }}" alt="">
-                        </a>
+                                <img src="{{ asset('forntend_asset/images/logo.png') }}" alt="">
+                            </a>
                         </div>
                     </div>
                     <div class="col-lg-7 d-none d-lg-block">
@@ -139,7 +163,8 @@
                     </div>
                     <div class="col-md-4 col-lg-2 col-sm-5 col-4">
                         <ul class="search-cart-wrapper d-flex">
-                            <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
+                            <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a>
+                            </li>
                             <li>
                                 <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
                                 <ul class="cart-wrap dropdown_style">
@@ -173,31 +198,37 @@
                             </li>
 
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i><span>{{ App\Models\Cart::where('generated_cart_id',Cookie::get('generated_cart_id'))->count() }}</span></a>
+                                <a href="javascript:void(0);"><i
+                                        class="flaticon-shop"></i><span>{{ App\Models\Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
                                     @php
                                         $sub_total = 0;
                                     @endphp
-                                    @foreach (App\Models\Cart::where('generated_cart_id',Cookie::get('generated_cart_id'))->get() as $cart_product)
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img width="60px" src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($cart_product->product_id)->product_image }}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">
-                                                {{App\Models\Product::find($cart_product->product_id)->product_name}}</a>
-                                            <span>QTY : {{ $cart_product->cart_amount }}</span>
-                                            <p>${{App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount}}</p>
-                                            <a href="{{ url('/delete/cart') }}/{{ $cart_product->id }}"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </li>
-                                    @php
-                                        $sub_total = $sub_total + (App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount);
-                                    @endphp
+                                    @foreach (App\Models\Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->get() as $cart_product)
+                                        <li class="cart-items">
+                                            <div class="cart-img">
+                                                <img width="60px"
+                                                    src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($cart_product->product_id)->product_image }}"
+                                                    alt="">
+                                            </div>
+                                            <div class="cart-content">
+                                                <a href="cart.html">
+                                                    {{ App\Models\Product::find($cart_product->product_id)->product_name }}</a>
+                                                <span>QTY : {{ $cart_product->cart_amount }}</span>
+                                                <p>${{ App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount }}
+                                                </p>
+                                                <a href="{{ url('/delete/cart') }}/{{ $cart_product->id }}"><i
+                                                        class="fa fa-times"></i></a>
+                                            </div>
+                                        </li>
+                                        @php
+                                            $sub_total = $sub_total + App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount;
+                                        @endphp
                                     @endforeach
-                                    <li>Subtotol: <span class="pull-right">${{  $sub_total  }}</span></li>
+                                    <li>Subtotol: <span class="pull-right">${{ $sub_total }}</span></li>
                                     <li>
-                                        <a href="{{ url('/details/cart') }}" class="btn btn-danger text-white">Check Out</a>
+                                        <a href="{{ url('/details/cart') }}" class="btn btn-danger text-white">Check
+                                            Out</a>
                                     </li>
                                 </ul>
                             </li>
@@ -208,10 +239,10 @@
                     <div class="col-md-1 col-sm-1 col-2 d-block d-lg-none">
                         <div class="responsive-menu-tigger">
                             <a href="javascript:void(0);">
-                        <span class="first"></span>
-                        <span class="second"></span>
-                        <span class="third"></span>
-                        </a>
+                                <span class="first"></span>
+                                <span class="second"></span>
+                                <span class="third"></span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -235,14 +266,15 @@
                                     </ul>
                                 </li>
                                 <li class="sidemenu-items">
-                                    <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Pages </a>
+                                    <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Pages
+                                    </a>
                                     <ul aria-expanded="false">
-                                      <li><a href="about.html">About Page</a></li>
-                                      <li><a href="single-product.html">Product Details</a></li>
-                                      <li><a href="cart.html">Shopping cart</a></li>
-                                      <li><a href="checkout.html">Checkout</a></li>
-                                      <li><a href="wishlist.html">Wishlist</a></li>
-                                      <li><a href="faq.html">FAQ</a></li>
+                                        <li><a href="about.html">About Page</a></li>
+                                        <li><a href="single-product.html">Product Details</a></li>
+                                        <li><a href="cart.html">Shopping cart</a></li>
+                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="faq.html">FAQ</a></li>
                                     </ul>
                                 </li>
                                 <li class="sidemenu-items">
@@ -265,7 +297,7 @@
 
 
 
-@yield('content')
+    @yield('content')
 
 
 
@@ -273,13 +305,13 @@
 
 
 
-      <!-- start social-newsletter-section -->
-      <section class="social-newsletter-section">
+    <!-- start social-newsletter-section -->
+    <section class="social-newsletter-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="newsletter text-center">
-                        <h3>Subscribe  Newsletter</h3>
+                        <h3>Subscribe Newsletter</h3>
                         <div class="newsletter-form">
                             <form>
                                 <input type="text" class="form-control" placeholder="Enter Your Email Address...">
@@ -329,7 +361,8 @@
                     </div>
                     <div class="col-lg-4 col-md-8 col-sm-12">
                         <div class="footer-content">
-                            <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure righteous indignation and dislike</p>
+                            <p>On the other hand, we denounce with righteous indignation and dislike men who are so
+                                beguiled and demoralized by the charms of pleasure righteous indignation and dislike</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-8 col-sm-12">
@@ -386,4 +419,5 @@
 
 
 <!-- Mirrored from themepresss.com/tf/html/tohoney/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Mar 2020 03:33:34 GMT -->
+
 </html>

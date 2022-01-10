@@ -22,7 +22,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::get('/', [fornntendController::class, 'welcome']);
 Route::get('/about', [fornntendController::class, 'aboutpage']);
 
-Route::get('/product/details/{product_id}', [fornntendController::class, 'product_detail']);
+Route::get('/product/details/{product_id}/{product_name}', [fornntendController::class, 'product_detail']);
 Route::get('/product/single_details/{product_id}', [fornntendController::class, 'singleproduct_detail']);
 Route::get('/product/shop', [fornntendController::class, 'productshop']);
 Route::get('/category/product/{category_id}', [fornntendController::class, 'category_product']);

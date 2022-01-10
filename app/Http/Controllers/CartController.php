@@ -99,7 +99,9 @@ class CartController extends Controller
         if ($request->payment_method == 1 || $request->payment_method == 2) {
             $order_id = Order::insertGetId([
                 'user_id' => Auth::id(),
-                'product_id' => session('product_id'),
+                // 'product_id' => 7,
+                // 'product_quantity' => 10,
+                'phone_no' => $request->phone_no,
                 'total' => session('total_from_cart'),
                 'discount' => session('discount_from_cart'),
                 'sub_total' => session('total_from_cart') - session('discount_from_cart'),
@@ -131,8 +133,9 @@ class CartController extends Controller
                     'product_quantity' => $cart_item->cart_amount,
                     'created_at' => Carbon::now(),
                 ]);
-                Product::find($cart_item->product_id)->decrement('product_quantity', $cart_item->product_quantity);
+                Product::find($cart_item->product_id)->decrement('product_quantity', $cart_item->cart_amount);
             }
+
 
             if ($request->payment_method == 1) {
                 Cart::where('generated_cart_id', Cookie::get('generated_cart_id'))->delete();
