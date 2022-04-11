@@ -98,14 +98,43 @@
                     <div class="col-md-6 col-12">
                         <ul class="d-flex account_login-area">
                             <li>
-                                <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i
-                                        class="fa fa-angle-down"></i></a>
+                                @if (session()->get('language') == 'bangla')
+                                    <a href="javascript:void(0);"><i class="fa fa-user"></i>আমার অ্যাকাউন্ট<i
+                                            class="fa fa-angle-down"></i></a>
+                                @else
+                                    <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i
+                                            class="fa fa-angle-down"></i></a>
+                                @endif
+
                                 <ul class="dropdown_style">
                                     <li><a href="login.html">Login</a></li>
                                     <li><a href="register.html">Register</a></li>
                                     <li><a href="cart.html">Cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="wishlist.html">wishlist</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                @if (session()->get('language') == 'bangla')
+                                    <a href="javascript:void(0);"><i class="fa fa-user"></i>ভাষা<i
+                                            class="fa fa-angle-down"></i></a>
+                                @else
+                                    <a href="javascript:void(0);"><i class="fa fa-user"></i>Language<i
+                                            class="fa fa-angle-down"></i></a>
+                                @endif
+
+                                <ul class="dropdown_style">
+                                    @if (session()->get('language') == 'bangla')
+                                        <li><a href="{{ route('english.language') }}">English</a></li>
+                                    @else
+                                        <li><a href="{{ route('bangla.language') }}">বাংলা</a></li>
+                                    @endif
+
+
+                                    {{-- <li><a href="cart.html">Cart</a></li>
+                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="wishlist.html">wishlist</a></li> --}}
                                 </ul>
                             </li>
                             <li><a href="{{ url('/register') }}"> Login/Register </a></li>
@@ -166,33 +195,35 @@
                             <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i>
+                                    <span>{{ App\Models\Wishlist::where('generated_cart_id', Cookie::get('generated_cart_id'))->count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/1.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @php
+                                        $sub_total = 0;
+                                    @endphp
+                                    @foreach (App\Models\Wishlist::where('generated_cart_id', Cookie::get('generated_cart_id'))->get() as $wishlist_product)
+                                        <li class="cart-items">
+                                            <div class="cart-img">
+                                                <img width="60px"
+                                                    src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($wishlist_product->product_id)->product_image }}"
+                                                    alt="">
+                                            </div>
+                                            <div class="cart-content">
+                                                <a href="{{ url('/details/cart') }}">
+                                                    {{ App\Models\Product::find($wishlist_product->product_id)->product_name }}</a>
+                                                {{-- <span>QTY : 1</span> --}}
+                                                <p>${{ App\Models\Product::find($wishlist_product->product_id)->product_price }}
+                                                </p>
+                                                <i class="fa fa-times"></i>
+                                            </div>
+                                        </li>
+                                    @endforeach
+
+
+                                    {{-- <li>Subtotol: <span class="pull-right">$70.00</span></li> --}}
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ url('/details/cart') }}"
+                                            class="btn btn-danger text-white">Wishlist</a>
                                     </li>
                                 </ul>
                             </li>
@@ -212,7 +243,7 @@
                                                     alt="">
                                             </div>
                                             <div class="cart-content">
-                                                <a href="cart.html">
+                                                <a href="{{ url('/details/cart') }}">
                                                     {{ App\Models\Product::find($cart_product->product_id)->product_name }}</a>
                                                 <span>QTY : {{ $cart_product->cart_amount }}</span>
                                                 <p>${{ App\Models\Product::find($cart_product->product_id)->product_price * $cart_product->cart_amount }}

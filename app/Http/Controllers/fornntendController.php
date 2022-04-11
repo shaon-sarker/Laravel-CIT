@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\HomeSeo;
+use App\Models\Orde_Product_Detail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +21,13 @@ class fornntendController extends Controller
         $category = Category::all();
         $products = Product::all();
         // $best_selleing = Product::all();
-        $best_selleing_products = Order::groupBy('product_id')
-            ->selectRaw('sum(product_quantity) as sum')
-            ->selectRaw('product_id')
-            ->get();
+        // $best_selleing_products = Order::groupBy('product_id')
+        //     ->selectRaw('sum(product_quantity) as sum')
+        //     ->selectRaw('product_id')
+        //     ->get();
+        // echo  $best_selleing_products;
+        $best_selleing_products = Product::where('best_selling', 'BestSellingProduct')->orderBy('id', 'DESC')->get();
+
 
         $homeseo = HomeSeo::all();
 

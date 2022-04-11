@@ -71,17 +71,34 @@
                 <div class="col-12">
                     <div class="featured-active2 owl-carousel next-prev-style">
                         {{-- {{$category}} --}}
-                        @foreach ($category as $single)
-                            <div class="featured-wrap">
-                                <div class="featured-img">
-                                    <img src="{{ asset('uploads/category') }}/{{ $single->category_image }}" alt="">
-                                    <div class="featured-content">
-                                        <a
-                                            href="{{ url('/category/product') }}/{{ $single->id }}">{{ $single->category_name }}</a>
+                        @if (session()->get('language') == 'bangla')
+                            @foreach ($category as $single)
+                                <div class="featured-wrap">
+                                    <div class="featured-img">
+                                        <img src="{{ asset('uploads/category') }}/{{ $single->category_image }}" alt="">
+                                        <div class="featured-content">
+
+                                            <a
+                                                href="{{ url('/category/product') }}/{{ $single->id }}">{{ $single->category_bangla }}</a>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            @foreach ($category as $single)
+                                <div class="featured-wrap">
+                                    <div class="featured-img">
+                                        <img src="{{ asset('uploads/category') }}/{{ $single->category_image }}" alt="">
+                                        <div class="featured-content">
+                                            <a
+                                                href="{{ url('/category/product') }}/{{ $single->id }}">{{ $single->category_name }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+
 
 
                         {{-- <div class="featured-wrap">
@@ -156,35 +173,38 @@
                 </div>
             </div>
             <ul class="row">
-                {{-- @foreach ($best_selleing_products as $best_product)
-            <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                <div class="product-wrap">
-                    <div class="product-img">
-                        <img src="{{ asset('uploads/products') }}/{{ App\Models\Product::find($best_product->product_id)->product_image }}" alt="">
-                        <div class="product-icon flex-style">
-                            <ul>
-                                <li><a data-toggle="modal" data-target="#exampleModalCenter" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h3><a href="{{ url('/product/details') }}/{{ $best_product->product_id }}">{{ App\Models\Product::find($best_product->product_id)->product_name }}</a></h3>
-                        <p class="pull-left">BDT {{ App\Models\Product::find($best_product->product_id)->product_price }}
+                @foreach ($best_selleing_products as $best_product)
+                    <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                        <div class="product-wrap">
+                            <div class="product-img">
+                                <img src="{{ asset('uploads/products') }}/{{ $best_product->product_image }}" alt="">
+                                <div class="product-icon flex-style">
+                                    <ul>
+                                        <li><a data-toggle="modal" data-target="#exampleModalCenter"
+                                                href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="">{{ $best_product->product_name }}</a>
+                                </h3>
+                                <p class="pull-left">BDT
+                                    {{ $best_product->product_price }}
 
-                        </p>
-                        <ul class="pull-right d-flex">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star-half-o"></i></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            @endforeach --}}
+                                </p>
+                                <ul class="pull-right d-flex">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star-half-o"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
 
                 {{-- <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
                 <div class="product-wrap">
@@ -293,7 +313,13 @@
                                     <ul>
                                         <li><a data-toggle="modal" data-target="#{{ $product->id }}"
                                                 href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
+                                        <li>
+
+                                            {{-- <input type="hidden" name="product_id"
+                                                    value="{{ $product->product_id }}"> --}}
+                                            <a href="{{ url('/add/wishlist') }}/{{ $product->id }}"><i
+                                                    class="fa fa-heart"></i></a>
+                                        </li>
                                         <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
                                     </ul>
                                 </div>

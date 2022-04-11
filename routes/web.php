@@ -10,7 +10,9 @@ use App\Http\Controllers\EditprofileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\fornntendController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // use App\Http\Controllers\Sendinvoice;
 
@@ -40,6 +42,10 @@ Route::post('/cart/update', [CartController::class, 'cartupdate']);
 
 Route::post('/order/confirm', [CartController::class, 'order']);
 
+//Wishlist work
+Route::get('/add/wishlist/{product_id}', [WishlistController::class, 'wishlist']);
+
+
 
 //Cupon Route
 Route::get('/coupon', [CouponController::class, 'coupon']);
@@ -48,6 +54,9 @@ Route::post('/coupon/insert', [CouponController::class, 'insert']);
 //review route
 Route::post('/review', [fornntendController::class, 'review']);
 
+Route::get('/language/bangla', [LanguageController::class, 'Bangla'])->name('bangla.language');
+
+Route::get('/language/english', [LanguageController::class, 'English'])->name('english.language');
 
 
 
@@ -88,7 +97,7 @@ Route::get('/product', [ProductController::class, 'view']);
 Route::get('/product/add', [ProductController::class, 'index']);
 Route::post('/product/insert', [ProductController::class, 'insert']);
 Route::get('/product/view/{id}', [ProductController::class, 'signleview']);
-Route::get('/product/edit/{product_id}', [ProductController::class, 'edit']);
+Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
 Route::post('/product/update', [ProductController::class, 'update']);
 Route::get('/product/delete/{product_id}', [ProductController::class, 'delete']);
 

@@ -43,6 +43,7 @@ class ProductController extends Controller
             'product_quantity' => $request->product_quantity,
             'created_at' => Carbon::now(),
         ]);
+
         $new_product_photo = $request->product_image;
         $extension = $new_product_photo->getClientOriginalExtension();
         $new_product_name = $product_id . '.' . $extension;
@@ -77,36 +78,40 @@ class ProductController extends Controller
     }
 
 
-    function edit($product_id)
+    function edit($id)
     {
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        $product_edit = Product::find($product_id);
+        $product_edit = Product::find($id);
         return view('admin.product.edit_product', compact('product_edit', 'categories', 'subcategories'));
     }
 
 
     function update(Request $request)
     {
-        $product_id = Product::find($request->product_id)->update([
+
+        Product::find($request->id)->update([
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'product_name' => $request->product_name,
             'product_price' => $request->product_price,
             'product_description' => $request->product_description,
             'product_quantity' => $request->product_quantity,
+            'best_selling' => $request->best_selling,
+
         ]);
         $request->validate([
             'product_image' => 'image',
-            'product_image' => 'file|size:600',
+            'product_image' => 'file|size:5000',
 
         ]);
+
         $new_product_photo = $request->product_image;
         $extension = $new_product_photo->getClientOriginalExtension();
-        $new_product_name = $product_id . '.' . $extension;
+        $new_product_name = $request->id . '.' . $extension;
 
         Image::make($new_product_photo)->save(base_path('public/uploads/products/' . $new_product_name));
-        Product::find($product_id)->update([
+        Product::find($request->id)->update([
             'product_image' => $new_product_name,
         ]);
         return back()->with('update', 'Update Successfully');

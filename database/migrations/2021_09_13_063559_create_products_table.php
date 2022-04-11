@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->longText('product_description');
             $table->integer('product_quantity');
             $table->string('product_image')->default('default.jpg');
+            $table->string('best_selling')->nullable();
             $table->timestamps();
         });
     }

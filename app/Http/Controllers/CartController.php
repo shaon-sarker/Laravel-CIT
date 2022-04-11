@@ -99,7 +99,7 @@ class CartController extends Controller
         if ($request->payment_method == 1 || $request->payment_method == 2) {
             $order_id = Order::insertGetId([
                 'user_id' => Auth::id(),
-                // 'product_id' => 7,
+                // 'product_id' => $request->product_id(),
                 // 'product_quantity' => 10,
                 'phone_no' => $request->phone_no,
                 'total' => session('total_from_cart'),
@@ -128,6 +128,7 @@ class CartController extends Controller
                 $product_price = Product::find($cart_item->product_id)->product_price;
                 Orde_Product_Detail::insert([
                     'order_id' => $order_id,
+                    // 'product_id' => 7,
                     'product_name' => $product_name,
                     'product_price' => $product_price,
                     'product_quantity' => $cart_item->cart_amount,

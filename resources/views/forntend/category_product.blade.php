@@ -1,26 +1,26 @@
 @extends('forntend.master')
 @section('content')
-<!-- .breadcumb-area start -->
-<div class="breadcumb-area bg-img-4 ptb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcumb-wrap text-center">
-                    <h2>{{ $category_name->category_name }}</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>{{ $category_name->category_name }}Shop</span></li>
-                    </ul>
+    <!-- .breadcumb-area start -->
+    <div class="breadcumb-area bg-img-4 ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcumb-wrap text-center">
+                        <h2>{{ $category_name->category_name }}</h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><span>{{ $category_name->category_name }}Shop</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- .breadcumb-area end -->
- <!-- product-area start -->
- <div class="product-area pt-100">
-    <div class="container">
-        {{-- <div class="row">
+    <!-- .breadcumb-area end -->
+    <!-- product-area start -->
+    <div class="product-area pt-100">
+        <div class="container">
+            {{-- <div class="row">
             <div class="col-sm-12 col-lg-12">
                 <div class="product-menu">
                     <ul class="nav justify-content-center">
@@ -37,20 +37,20 @@
                 </div>
             </div>
         </div> --}}
-        <div class="tab-content">
-            <div class="tab-pane active" id="all">
-                <ul class="row">
+            <div class="tab-content">
+                <div class="tab-pane active" id="all">
+                    <ul class="row">
 
-                    @foreach ($category_products  as  $category_product)
-                        @include('forntend.parts.product_list',['shopproduct'=>$category_product])
-                    @endforeach
+                        @foreach ($category_products as $category_product)
+                            @include('forntend.parts.product_list',['shopproduct'=>$category_product])
+                        @endforeach
 
-                </ul>
-            </div>
-            {{-- @foreach ( $categories as $category )
+                    </ul>
+                </div>
+                {{-- @foreach ($categories as $category)
             <div class="tab-pane" id="category{{ $category->id }}">
                 <ul class="row">
-                    @foreach (App\Models\Product::where('category_id',$category->id)->get() as $shopproduct)
+                    @foreach (App\Models\Product::where('category_id', $category->id)->get() as $shopproduct)
                     <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
                         <div class="product-wrap">
                             <div class="product-img">
@@ -83,8 +83,8 @@
                 </ul>
             </div>
             @endforeach --}}
+            </div>
         </div>
     </div>
-</div>
-<!-- product-area end -->
+    <!-- product-area end -->
 @endsection
