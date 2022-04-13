@@ -28,7 +28,7 @@
                                 <h3>Billing Details</h3>
                                 <form action="{{ url('/order/confirm') }}" method="POST">
                                     @csrf
-                                    {{-- <input type="hidden" value="{{ $countrys->product_id }}"> --}}
+                                    {{-- <input type="hidden" value="{{ session('product_id') }}"> --}}
 
                                     <div class=" row">
                                         <div class="col-sm-12 col-12">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="order-area">
-                                <h2>{{ session('product_id') }}</h2>
+                                {{-- <h2>{{ session('product_id') }}</h2> --}}
                                 <h3>Your Order</h3>
                                 <ul class="total-cost">
                                     {{-- <li>Pure Nature Honey <span class="pull-right">$139.00</span></li>

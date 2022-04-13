@@ -196,12 +196,12 @@
                             </li>
                             <li>
                                 <a href="javascript:void(0);"><i class="flaticon-like"></i>
-                                    <span>{{ App\Models\Wishlist::where('generated_cart_id', Cookie::get('generated_cart_id'))->count() }}</span></a>
+                                    <span>{{ App\Models\Wishlist::where('user_id', Auth::id())->count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    @php
+                                    {{-- @php
                                         $sub_total = 0;
-                                    @endphp
-                                    @foreach (App\Models\Wishlist::where('generated_cart_id', Cookie::get('generated_cart_id'))->get() as $wishlist_product)
+                                    @endphp --}}
+                                    {{-- @foreach (App\Models\Wishlist::where('generated_cart_id', Cookie::get('generated_cart_id'))->get() as $wishlist_product)
                                         <li class="cart-items">
                                             <div class="cart-img">
                                                 <img width="60px"
@@ -211,18 +211,18 @@
                                             <div class="cart-content">
                                                 <a href="{{ url('/details/cart') }}">
                                                     {{ App\Models\Product::find($wishlist_product->product_id)->product_name }}</a>
-                                                {{-- <span>QTY : 1</span> --}}
+
                                                 <p>${{ App\Models\Product::find($wishlist_product->product_id)->product_price }}
                                                 </p>
                                                 <i class="fa fa-times"></i>
                                             </div>
                                         </li>
-                                    @endforeach
+                                    @endforeach --}}
 
 
                                     {{-- <li>Subtotol: <span class="pull-right">$70.00</span></li> --}}
                                     <li>
-                                        <a href="{{ url('/details/cart') }}"
+                                        <a href="{{ route('wishlist.show') }}"
                                             class="btn btn-danger text-white">Wishlist</a>
                                     </li>
                                 </ul>

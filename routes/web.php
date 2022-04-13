@@ -13,6 +13,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\WishlistController;
+use App\Models\Wishlist;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // use App\Http\Controllers\Sendinvoice;
 
@@ -44,7 +45,8 @@ Route::post('/order/confirm', [CartController::class, 'order']);
 
 //Wishlist work
 Route::get('/add/wishlist/{product_id}', [WishlistController::class, 'wishlist']);
-
+Route::get('/details/wishlist', [WishlistController::class, 'show'])->name('wishlist.show');
+Route::post('/addcart/wishlist/{product_id}', [WishlistController::class, 'wishtocart',]);
 
 
 //Cupon Route

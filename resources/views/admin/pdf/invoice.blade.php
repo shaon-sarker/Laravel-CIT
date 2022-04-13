@@ -38,14 +38,16 @@
     <div class="table-design">
         <table border="1px">
             <tr>
+                <th>Product Name</th>
+                <th>Product Price</th>
                 <th>Total</th>
                 <th>Discount</th>
                 <th>Subtotal</th>
             </tr>
             @foreach (App\Models\Orde_Product_Detail::where('order_id', $data->id)->get() as $order_details)
                 <tr>
-                    {{-- <td>{{ $order_details->product_name }}</td>
-                <td>{{ $order_details->product_price }}</td> --}}
+                    <td>{{ $order_details->product_name }}</td>
+                    <td>{{ $order_details->product_price }}</td>
                     <td>{{ $data->total }}</td>
                     <td>{{ $data->discount }}</td>
                     <td>{{ $data->sub_total }}</td>

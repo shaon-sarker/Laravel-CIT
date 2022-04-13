@@ -17,105 +17,99 @@
         </div>
     </div>
     <!-- .breadcumb-area end -->
-    <!-- product-area start -->
-    <div class="product-area pt-100">
+    <!-- cart-area start -->
+    <div class="cart-area ptb-100">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-lg-12">
-                    <div class="product-menu">
-                        <ul class="nav justify-content-center">
-                            <li>
-                                <a class="active" data-toggle="tab" href="#all">All product</a>
-                            </li>
-                            @foreach ($categories as $category)
-                                <li>
-                                    <a data-toggle="tab"
-                                        href="#category{{ $category->id }}">{{ $category->category_name }}</a>
-                                </li>
-                            @endforeach
+                <div class="col-12">
 
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active" id="all">
-                    <ul class="row">
-                        @foreach ($products as $product)
-                            {{-- <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                        <div class="product-wrap">
-                            <div class="product-img">
-                                <span>Sale</span>
-                                <img src="{{ asset('uploads/products') }}/{{ $product->product_image }}" alt="">
-                                <div class="product-icon flex-style">
-                                    <ul>
-                                        <li><a data-toggle="modal" data-target="#exampleModalCenter" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <h3><a href="{{ url('/product/details') }}/{{ $product->id }}">{{ $product->product_name }}</a></h3>
-                                <p class="pull-left">${{ $product->product_price }}</p>
-                                <ul class="pull-right d-flex">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-o"></i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li> --}}
-                            @include('forntend.parts.product_list', [
-                                'shopproduct' => $product,
-                                'category_name' => 'all',
-                            ])
-                        @endforeach
+                    {{-- <form> --}}
+                    {{-- @csrf --}}
+                    {{-- <input type="text" class="product_id " value="{{ $produst_wishlist->product_id }}"> --}}
+                    <table class="table-responsive cart-wrap">
+                        <thead>
+                            <tr>
+                                <th class="images">Image</th>
+                                <th class="product">Product</th>
+                                <th class="ptice">Price</th>
+                                <th class="stock">Stock Stutus </th>
+                                {{-- <th class="quantity">Quantity</th> --}}
+                                <th class="addcart">Add to Cart</th>
+                                <th class="remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($produst_wishlist as $wishlist)
+                                <tr>
+                                    <td class="images"><img
+                                            src="{{ asset('uploads/products') }}/{{ $wishlist->relation_to_product->product_image }}"
+                                            alt=""></td>
+                                    <td class="product"><a
+                                            href="single-product.html">{{ $wishlist->relation_to_product->product_name }}</a>
+                                    </td>
+                                    <td class="ptice">${{ $wishlist->relation_to_product->product_price }}
+                                    </td>
+                                    <td class="stock">In Stock</td>
+                                    <td>
+                                        <form action="{{ url('/addcart/wishlist') }}/{{ $wishlist->relation_to_product->id }}"
+                                        method="POST">
+                                        @csrf
+                                        {{-- <input type="hidden" name="cart_amount"
+                                                value="{{ $wishlist->relation_to_product->product_quantity }}"> --}}
+                                        <span class="addcart">
+                                            <button type="submit" class="btn btn-danger">Add to Cart</button>
+                                        </span>
 
-                    </ul>
+                                        </form>
+                                    </td>
+                                    {{-- <td>
+                                            <a href="{{ url('/addto/cart') }}/{{ $wishlist->relation_to_product->id }}">add
+                                                to cart</a>
+                                        </td> --}}
+
+
+                                    <td class="remove"><i class="fa fa-times"></i></td>
+                                </tr>
+                            @empty
+                                {{-- <tr>
+                                        <td colspan="6">No Data SHow</td>
+                                    </tr> --}}
+                            @endforelse
+                        </tbody>
+                    </table>
+                    {{-- </form> --}}
                 </div>
-                @foreach ($categories as $category)
-                    <div class="tab-pane" id="category{{ $category->id }}">
-                        <ul class="row">
-                            @foreach (App\Models\Product::where('category_id', $category->id)->get() as $shopproduct)
-                                {{-- <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                        <div class="product-wrap">
-                            <div class="product-img">
-                                <span>Sale</span>
-                                <img src="{{ asset('uploads/products') }}/{{ $shopproduct->product_image }}" alt="">
-                                <div class="product-icon flex-style">
-                                    <ul>
-                                        <li><a data-toggle="modal" data-target="#exampleModalCenter" href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <h3><a href="{{ url('/product/details') }}/{{ $shopproduct->id }}">{{ $shopproduct->product_name }}</a></h3>
-                                <p class="pull-left">${{ $shopproduct->product_price }}</p>
-                                <ul class="pull-right d-flex">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-o"></i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li> --}}
-                                @include('forntend.parts.product_list', [
-                                    'shopproduct' => $product,
-                                    'category_name' => $category->category_name,
-                                ])
-                            @endforeach
-                        </ul>
-                    </div>
-                @endforeach
             </div>
         </div>
     </div>
-    <!-- product-area end -->
+    <!-- cart-area end -->
+@endsection
+@section('footer_script')
+    {{-- <script>
+        $(document).ready(function() {
+            $('.addWishlist').click(function(e) {
+                e.preventDefault();
+                var product_id = $(this).closest('.product_data').find('.prod_id').val();
+                var product_qty = $(this).closest('.product_data').find('.qty_input').val();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    method: "POST",
+                    url: "",
+                    data: {
+                        'product_id': product_id,
+                        // 'product_qty': product_qty,
+                    },
+                    success: function(response) {
+                        swal(response.status);
+                    }
+
+                });
+            });
+        })
+    </script> --}}
 @endsection

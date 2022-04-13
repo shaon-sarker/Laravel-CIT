@@ -43,7 +43,7 @@
                             <tbody>
                                 @php
                                     $total = 0;
-                                    $product_id = 'product_id';
+                                    // $cart_detail = 0;
                                     $checkout_btn_show = true;
                                 @endphp
 
@@ -67,7 +67,8 @@
                                         </td>
 
                                         <td class="ptice">
-                                            ${{ $cart_detail->relation_to_product_has_one->product_price }}</td>
+                                            ${{ $cart_detail->relation_to_product_has_one->product_price }}
+                                        </td>
 
                                         <td class="quantity cart-plus-minus">
                                             <input type="text" name="cart_amount[{{ $cart_detail->id }}]"
@@ -128,16 +129,15 @@
                         </li>
                         <li><span class="pull-left"> SubTotal </span>{{ $total - ($total / 100) * $discount }}</li>
                     </ul>
-                    <h2>{{ $cart_detail->product_id }}</h2>
+                    {{-- <h2>{{ $cart_detail->product_id }}</h2> --}}
 
                     @php
                         session([
                             'total_from_cart' => $total,
-                            'product_id' => $cart_detail->product_id,
+                            // 'product_id' => $cart_detail->product_id,
                             'discount_from_cart' => ($total / 100) * $discount,
                         ]);
                     @endphp
-
 
                     @if ($checkout_btn_show)
                         <a href="{{ url('/checkout') }}">Proceed to Checkout</a>
